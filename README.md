@@ -16,7 +16,7 @@ A clave deste sintetizador é a interacción directa. Non hai botóns nin menús
     *   **Figura azul (a forma):** Controla como ataca e como se esvaece cada nota. Podes crear desde "plinks" curtos e percusivos ata sons que medran e morren lentamente.
     *   **Semicírculo verde (o eco):** Engade repeticións e profundidade, creando unha sensación de espazo.
 
-*   **Botón dereito do rato:** Fai clic co botón dereito sobre os círculos para cambiar a súa "voz" interna. Verás como o pequeno debuxo do seu interior cambia, ofrecendo novas paletas sonoras para explorar.
+*   **Botón dereito do rato:** Fai clic co botón dereito sobre os círculos para cambiar a súa "voz" interna ou as conexións. Verás como o pequeno debuxo do seu interior cambia, ou aparecen liñas conectando os círculos, ofrecendo novas paletas sonoras para explorar. 
 
 *   **Barra de espazo:** Mantén unha nota soando de forma indefinida. Cando arrastras un dos círculos centrais para crear un son, pulsa a barra de espazo. O son quedará "conxelado", permitíndoche seguir modificando outros parámetros mentres soa. Vólvea a pulsar para liberalo.
 
