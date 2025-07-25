@@ -17,8 +17,6 @@ const lfo1Indicator = document.getElementById('lfo1-indicator');
 const lfo2Indicator = document.getElementById('lfo2-indicator');
 const lfo1ModLine = document.getElementById('lfo1-mod-line');
 const lfo2ModLine = document.getElementById('lfo2-mod-line');
-const lfo1TargetLabel = document.getElementById('lfo1-target-label');
-const lfo2TargetLabel = document.getElementById('lfo2-target-label');
 const adsrShape = document.getElementById('adsr-shape');
 const delayHandle = document.getElementById('delay-handle');
 const sequencerGrid = document.getElementById('sequencer-grid');
@@ -26,8 +24,10 @@ const playButton = document.getElementById('play-button');
 const playIcon = document.getElementById('play-icon');
 const stopIcon = document.getElementById('stop-icon');
 const tempoHandle = document.getElementById('tempo-handle');
-const tempoLabel = document.getElementById('tempo-label');
+const tempoDisplay = document.getElementById('tempo-display');
 const playhead = document.getElementById('playhead');
+const saveButton = document.getElementById('save-button');
+const loadButton = document.getElementById('load-button');
 
 // --- 2. ESTADO DO SINTETIZADOR ---
 let audioContext;
@@ -38,6 +38,12 @@ let notaActiva = false;
 let dragContext = {};
 let sustainActivado = false; 
 let vco2TuningMode = 'relative';
+
+// Obxecto de estado explícito para as posicións dos elementos principais
+let positionState = {
+    vco: { x: 0, y: 0 },
+    lfo: { x: 0, y: 0 }
+};
 
 const formasDeOndaVCO1 = ['sine', 'square', 'triangle', 'sawtooth', 'noise'];
 const formasDeOndaVCO2 = ['sine', 'square', 'triangle', 'sawtooth'];
@@ -142,10 +148,10 @@ lenzo.addEventListener('mousedown', (e) => {
     const type = target.dataset.draggable;
     dragContext = { target, type, startPoint };
 
-    if (type.startsWith('vco') || type.startsWith('lfo')) {
-        const group = type.startsWith('vco') ? vcoGroup : lfoGroup;
-        const matrix = group.transform.baseVal.getItem(0).matrix;
-        dragContext.initialPos = { x: matrix.e, y: matrix.f };
+    if (type.startsWith('vco')) {
+        dragContext.initialPos = { x: positionState.vco.x, y: positionState.vco.y };
+    } else if (type.startsWith('lfo')) {
+        dragContext.initialPos = { x: positionState.lfo.x, y: positionState.lfo.y };
     } else {
         dragContext.initialPos = {
             x: parseFloat(target.getAttribute('x')) || parseFloat(target.getAttribute('cx')),
@@ -182,15 +188,13 @@ window.addEventListener('mousemove', (e) => {
         case 'vco1':
         case 'vco2':
             actualizarVCO1(newPos.x, newPos.y);
-            const vcoMatrix = vcoGroup.transform.baseVal.getItem(0).matrix;
-            const centroAbsolutoVCO = { x: 400 + vcoMatrix.e, y: 180 + vcoMatrix.f };
+            const centroAbsolutoVCO = { x: 400 + positionState.vco.x, y: 180 + positionState.vco.y };
             actualizarVCO2(currentPoint.x - centroAbsolutoVCO.x, currentPoint.y - centroAbsolutoVCO.y);
             break;
         case 'lfo1':
         case 'lfo2':
             actualizarLFO1(newPos.x, newPos.y);
-            const lfoMatrix = lfoGroup.transform.baseVal.getItem(0).matrix;
-            const centroAbsolutoLFO = { x: 100 + lfoMatrix.e, y: 100 + lfoMatrix.f };
+            const centroAbsolutoLFO = { x: 100 + positionState.lfo.x, y: 100 + positionState.lfo.y };
             actualizarLFO2(currentPoint.x - centroAbsolutoLFO.x, currentPoint.y - centroAbsolutoLFO.y);
             break;
         case 'vcf':
@@ -349,8 +353,6 @@ function cambiarDestinoLFO(numLFO, isInitial = false) {
     if (!isInitial) {
         state.targetIndex = (state.targetIndex + 1) % state.targets.length;
     }
-    const targetLabel = (numLFO === 1) ? lfo1TargetLabel : lfo2TargetLabel;
-    targetLabel.textContent = state.targets[state.targetIndex];
     const depthNode = (numLFO === 1) ? lfo1Depth : lfo2Depth;
     if(depthNode) depthNode.disconnect();
     const targetKey = state.targets[state.targetIndex];
@@ -503,7 +505,7 @@ function actualizarValoresSintetizador() {
     actualizarVCO2(0, 0);
     actualizarLFO1(0, 0);
     actualizarLFO2(0, 0);
-    actualizarVCF(650, 80);
+    actualizarVCF(720, 80);
     actualizarADSR(null);
     actualizarDelay(580, 530);
     actualizarTempo(235);
@@ -515,6 +517,10 @@ function actualizarVCO1(x, y) {
     const clampedY = Math.max(-140, Math.min(140, y));
     vcoGroup.transform.baseVal.getItem(0).setTranslate(clampedX, clampedY);
     
+    // Actualiza o estado da posición
+    positionState.vco.x = clampedX;
+    positionState.vco.y = clampedY;
+
     const absoluteX = 400 + clampedX;
     const absoluteY = 180 + clampedY;
     const notaMIDI = mapearRango(absoluteY, 320, 40, 24, 96);
@@ -580,6 +586,10 @@ function actualizarLFO1(x, y) {
     const clampedY = Math.max(-100, Math.min(250, y));
     lfoGroup.transform.baseVal.getItem(0).setTranslate(clampedX, clampedY);
     
+    // Actualiza o estado da posición
+    positionState.lfo.x = clampedX;
+    positionState.lfo.y = clampedY;
+
     const absX = 100 + clampedX;
     const absY = 100 + clampedY;
     lfo1State.rate = mapearRango(absX, 0, 800, 0.1, 20);
@@ -696,13 +706,13 @@ function actualizarDelay(x, y) {
 }
 
 function actualizarTempo(x) {
-    const xMin = 150, xMax = 320;
+    const xMin = 150, xMax = 280;
     const clampedX = Math.max(xMin, Math.min(xMax, x));
     tempoHandle.setAttribute('cx', clampedX);
 
     const newTempo = Math.round(mapearRango(clampedX, xMin, xMax, 60, 240));
     sequencerState.tempo = newTempo;
-    tempoLabel.textContent = `${newTempo} bpm`;
+    tempoDisplay.textContent = `${newTempo} bpm`;
 
     if (sequencerState.isPlaying) {
         clearInterval(sequencerState.clockInterval);
@@ -711,7 +721,125 @@ function actualizarTempo(x) {
     }
 }
 
-// --- 7. ANIMACIÓN E UTILIDADES ---
+// --- 7. GARDAR/CARGAR E ESTADO DE AUDIO ---
+
+function resetAudioEngine() {
+    if (!audioContext) return;
+    const now = audioContext.currentTime;
+    vca.gain.cancelScheduledValues(now);
+    vca.gain.setValueAtTime(0, now);
+    feedbackNode.gain.setTargetAtTime(0, now, 0.01);
+    wetGain.gain.setTargetAtTime(0, now, 0.01);
+    notaActiva = false;
+    sustainActivado = false;
+    actualizarGlows(false, false);
+}
+
+async function gardarConfiguracion() {
+    const settings = {
+        positions: {
+            vcoGroup: positionState.vco,
+            lfoGroup: positionState.lfo,
+            vcf: { x: vcfControl.getAttribute('x'), y: vcfControl.getAttribute('y') },
+            adsr: {
+                attack: { cx: adsrGroupElements.attack.getAttribute('cx') },
+                decaySustain: { cx: adsrGroupElements.decaySustain.getAttribute('cx'), cy: adsrGroupElements.decaySustain.getAttribute('cy') },
+                release: { cx: adsrGroupElements.release.getAttribute('cx') }
+            },
+            delay: { cx: delayHandle.getAttribute('cx'), cy: delayHandle.getAttribute('cy') },
+            tempo: { cx: tempoHandle.getAttribute('cx') }
+        },
+        states: {
+            vco1: vco1State,
+            vco2: vco2State,
+            vco2TuningMode: vco2TuningMode,
+            lfo1: lfo1State,
+            lfo2: lfo2State,
+            sequencer: sequencerState,
+            sequencerData: sequencerData
+        }
+    };
+    const result = await window.electronAPI.saveSettings(settings);
+    if (result.success) {
+        console.log(`Configuración gardada en: ${result.path}`);
+    } else if (!result.cancelled) {
+        console.error(`Error gardando a configuración: ${result.error}`);
+    }
+}
+
+async function cargarConfiguracion() {
+    const result = await window.electronAPI.loadSettings();
+    if (result.success) {
+        aplicarConfiguracion(result.data);
+    } else if (!result.cancelled) {
+        console.error(`Error cargando a configuración: ${result.error}`);
+    }
+}
+
+function aplicarConfiguracion(settings) {
+    try {
+        if (!settings || !settings.positions || !settings.states) {
+            console.error("O ficheiro de configuración é inválido ou está incompleto.");
+            return;
+        }
+        
+        resetAudioEngine();
+
+        vco1State = settings.states.vco1;
+        vco2State = settings.states.vco2;
+        vco2TuningMode = settings.states.vco2TuningMode || 'relative';
+        lfo1State = settings.states.lfo1;
+        lfo2State = settings.states.lfo2;
+        sequencerState = settings.states.sequencer;
+        sequencerData = settings.states.sequencerData;
+
+        const { positions } = settings;
+
+        actualizarVCO1(positions.vcoGroup.x, positions.vcoGroup.y);
+        actualizarLFO1(positions.lfoGroup.x, positions.lfoGroup.y);
+        
+        vcfControl.setAttribute('x', positions.vcf.x);
+        vcfControl.setAttribute('y', positions.vcf.y);
+        actualizarVCF(parseFloat(positions.vcf.x), parseFloat(positions.vcf.y));
+
+        adsrGroupElements.attack.setAttribute('cx', positions.adsr.attack.cx);
+        adsrGroupElements.decaySustain.setAttribute('cx', positions.adsr.decaySustain.cx);
+        adsrGroupElements.decaySustain.setAttribute('cy', positions.adsr.decaySustain.cy);
+        adsrGroupElements.release.setAttribute('cx', positions.adsr.release.cx);
+        actualizarADSR(null);
+
+        delayHandle.setAttribute('cx', positions.delay.cx);
+        delayHandle.setAttribute('cy', positions.delay.cy);
+        actualizarDelay(parseFloat(positions.delay.cx), parseFloat(positions.delay.cy));
+
+        tempoHandle.setAttribute('cx', positions.tempo.cx);
+        actualizarTempo(parseFloat(positions.tempo.cx));
+        
+        cambiarFormaDeOnda(1, true);
+        cambiarFormaDeOnda(2, true);
+        cambiarDestinoLFO(1, true);
+        cambiarDestinoLFO(2, true);
+
+        const cells = document.querySelectorAll('.sequencer-cell');
+        cells.forEach(cell => {
+            const step = parseInt(cell.dataset.step, 10);
+            const note = parseInt(cell.dataset.note, 10);
+            const isActive = sequencerData && sequencerData[step] && sequencerData[step][note];
+            if (isActive) {
+                cell.classList.add('sequencer-cell-active');
+            } else {
+                cell.classList.remove('sequencer-cell-active');
+            }
+        });
+        
+        console.log("Configuración aplicada con éxito.");
+
+    } catch (error) {
+        console.error("🛑 ERROR CRÍTICO ao aplicar a configuración:", error);
+    }
+}
+
+// --- 8. ANIMACIÓN E UTILIDADES ---
 function actualizarGlows(unison, fifth) {
     const sustainGlow = sustainActivado;
     vco1Circle.removeAttribute('stroke');
@@ -781,4 +909,8 @@ function createWhiteNoiseBuffer(audioContext) {
 document.addEventListener('DOMContentLoaded', () => {
     inicializarSequencer();
     actualizarValoresSintetizador();
+    // Engade os listeners para os novos botóns
+    saveButton.addEventListener('click', gardarConfiguracion);
+    loadButton.addEventListener('click', cargarConfiguracion);
 });
+

@@ -31,12 +31,10 @@
             <circle id="lfo1-circle" data-draggable="lfo1" cx="100" cy="100" r="30" fill="#f44336"></circle>
             <line id="lfo1-indicator" x1="100" y1="100" x2="100" y2="75" stroke="#1e1e1e" stroke-width="3"></line>
             <line id="lfo2-indicator" x1="100" y1="100" x2="100" y2="60" stroke="#d4d4d4" stroke-width="2"></line>
-            <text id="lfo1-target-label" x="100" y="160" text-anchor="middle" fill="#d4d4d4" font-size="12">OFF</text>
-            <text id="lfo2-target-label" x="100" y="40" text-anchor="middle" fill="#d4d4d4" font-size="12">OFF</text>
         </g>
         
-        <rect id="vcf" data-draggable="vcf" x="650" y="80" width="60" height="180" fill="#ff9800"></rect>
-        <circle id="vcf-jack" cx="680" cy="80" r="8" fill="#1e1e1e" stroke="#ff9800" stroke-width="2" style="pointer-events: none;"></circle>
+        <rect id="vcf" data-draggable="vcf" x="720" y="80" width="60" height="180" fill="#ff9800"></rect>
+        <circle id="vcf-jack" cx="750" cy="80" r="8" fill="#1e1e1e" stroke="#ff9800" stroke-width="2" style="pointer-events: none;"></circle>
 
         <g id="adsr-control">
             <polygon id="adsr-shape" points="50,380 100,280 250,330 350,380" fill="rgba(3, 169, 244, 0.3)"></polygon>
@@ -67,9 +65,18 @@
                     <rect id="stop-icon" x="109" y="434" width="12" height="12" fill="#d4d4d4" style="display: none;"></rect>
                 </g>
                 <g id="tempo-control">
-                    <line x1="150" y1="440" x2="320" y2="440" stroke="#444" stroke-width="4"></line>
-                    <circle id="tempo-handle" data-draggable="tempo" cx="235" cy="440" r="8" fill="#e91e63"></circle>
-                    <text id="tempo-label" x="330" y="445" fill="#d4d4d4" font-size="12">120 bpm</text>
+                    <line x1="150" y1="440" x2="280" y2="440" stroke="#444" stroke-width="4"></line>
+                    <circle id="tempo-handle" data-draggable="tempo" cx="215" cy="440" r="8" fill="#e91e63"></circle>
+                    <text id="tempo-display" x="300" y="445" fill="#d4d4d4" font-size="16" font-family="monospace" text-anchor="start">120 bpm</text>
+                </g>
+                <g id="save-button" style="cursor: pointer;">
+                    <rect x="380" y="430" width="30" height="20" fill="#444"></rect>
+                    <path d="M 385 434 h 20 v 12 h -20 z M 387 442 h 16" stroke="#d4d4d4" stroke-width="1.5" fill="none"></path>
+                    <rect x="392" y="434" width="6" height="6" fill="#444" stroke="#d4d4d4" stroke-width="1"></rect>
+                </g>
+                <g id="load-button" style="cursor: pointer;">
+                    <rect x="420" y="430" width="30" height="20" fill="#444"></rect>
+                    <path d="M 425 435 v 10 h 20 v -7 l -5 -3 z" stroke="#d4d4d4" stroke-width="1.5" fill="none"></path>
                 </g>
             </g>
         </g>
