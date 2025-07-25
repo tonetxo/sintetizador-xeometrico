@@ -1,0 +1,52 @@
+/* Estilo base da aplicación */
+body {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Estilo para o lenzo principal */
+#lenzo-sintetizador {
+    width: 100vw;
+    height: 100vh;
+    user-select: none;
+}
+
+/* Estilos para os controis */
+#vco1-circle, #lfo1-circle, #vcf, #adsr-control circle, #delay-handle, #tempo-handle {
+    cursor: pointer;
+}
+
+#vco1-circle:active, #lfo1-circle:active, #vcf:active, #adsr-control circle:active, #delay-handle:active, #tempo-handle:active {
+    cursor: grabbing;
+}
+
+#vco2-circle, #lfo2-circle {
+    cursor: crosshair;
+}
+
+#vco2-circle:active, #lfo2-circle:active {
+    cursor: grabbing;
+}
+
+.onda-vco1, .onda-vco2 {
+    display: none;
+    pointer-events: none;
+}
+
+/* ESTILOS DO SECUENCIADOR */
+.sequencer-cell {
+    fill: #3c3c3c;
+    stroke: #2a2a2a;
+    stroke-width: 1px;
+    cursor: pointer;
+    rx: 2;
+}
+.sequencer-cell:hover {
+    fill: #555555;
+}
+.sequencer-cell-active {
+    fill: #00bcd4;
+}

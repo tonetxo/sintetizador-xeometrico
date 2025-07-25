@@ -1,0 +1,11 @@
+# Ignorar dependencias de Node
+node_modules/
+
+# Ignorar ficheiros de compilación de Electron
+.electron/
+dist/
+out/
+
+# Ficheiros de sistema operativo
+.DS_Store
+Thumbs.db

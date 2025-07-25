@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sintetizador Xeométrico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <svg id="lenzo-sintetizador" width="100%" height="100%" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+        
+        <g id="vco-group" transform="translate(0,0)">
+            <circle id="vco2-circle" data-draggable="vco2" cx="400" cy="180" r="70" fill="#00838f"></circle>
+            <circle id="vco1-circle" data-draggable="vco1" cx="400" cy="180" r="40" fill="#00bcd4"></circle>
+            <g id="vco1-wave-icons" style="pointer-events: none;">
+                <path id="vco1-onda-sine" class="onda-vco1" d="M 385 180 q 7.5 -15 15 0 t 15 0" stroke="#1e1e1e" stroke-width="2.5" fill="none"></path>
+                <path id="vco1-onda-square" class="onda-vco1" d="M 385 185 l 7.5 0 l 0 -10 l 15 0 l 0 10 l 7.5 0" stroke="#1e1e1e" stroke-width="2.5" fill="none"></path>
+                <path id="vco1-onda-triangle" class="onda-vco1" d="M 385 185 l 7.5 -10 l 7.5 10 l 7.5 -10 l 7.5 10" stroke="#1e1e1e" stroke-width="2.5" fill="none"></path>
+                <path id="vco1-onda-sawtooth" class="onda-vco1" d="M 385 185 l 15 -10 l 0 10 l 15 -10" stroke="#1e1e1e" stroke-width="2.5" fill="none"></path>
+                <path id="vco1-onda-noise" class="onda-vco1" d="M 385 180 l 2.5 -2.5 l 2.5 5 l 2.5 -6 l 2.5 4 l 2.5 -7.5 l 2.5 5 l 2.5 -2.5 l 2.5 4 l 2.5 -5 l 2.5 6" stroke="#1e1e1e" stroke-width="2.5" fill="none"></path>
+            </g>
+            <g id="vco2-wave-icons" transform="translate(400, 125)" style="pointer-events: none;">
+                <path id="vco2-onda-sine" class="onda-vco2" d="M -15 0 q 7.5 -15 15 0 t 15 0" stroke="#d4d4d4" stroke-width="2.5" fill="none"></path>
+                <path id="vco2-onda-square" class="onda-vco2" d="M -15 5 l 7.5 0 l 0 -10 l 15 0 l 0 10 l 7.5 0" stroke="#d4d4d4" stroke-width="2.5" fill="none"></path>
+                <path id="vco2-onda-triangle" class="onda-vco2" d="M -15 5 l 7.5 -10 l 7.5 10 l 7.5 -10 l 7.5 10" stroke="#d4d4d4" stroke-width="2.5" fill="none"></path>
+                <path id="vco2-onda-sawtooth" class="onda-vco2" d="M -15 5 l 15 -10 l 0 10 l 15 -10" stroke="#d4d4d4" stroke-width="2.5" fill="none"></path>
+            </g>
+        </g>
+
+        <g id="lfo-group" transform="translate(0, 0)">
+            <circle id="lfo2-circle" data-draggable="lfo2" cx="100" cy="100" r="45" fill="#ab47bc"></circle>
+            <circle id="lfo1-circle" data-draggable="lfo1" cx="100" cy="100" r="30" fill="#f44336"></circle>
+            <line id="lfo1-indicator" x1="100" y1="100" x2="100" y2="75" stroke="#1e1e1e" stroke-width="3"></line>
+            <line id="lfo2-indicator" x1="100" y1="100" x2="100" y2="60" stroke="#d4d4d4" stroke-width="2"></line>
+            <text id="lfo1-target-label" x="100" y="160" text-anchor="middle" fill="#d4d4d4" font-size="12">OFF</text>
+            <text id="lfo2-target-label" x="100" y="40" text-anchor="middle" fill="#d4d4d4" font-size="12">OFF</text>
+        </g>
+        
+        <rect id="vcf" data-draggable="vcf" x="650" y="80" width="60" height="180" fill="#ff9800"></rect>
+        <circle id="vcf-jack" cx="680" cy="80" r="8" fill="#1e1e1e" stroke="#ff9800" stroke-width="2" style="pointer-events: none;"></circle>
+
+        <g id="adsr-control">
+            <polygon id="adsr-shape" points="50,380 100,280 250,330 350,380" fill="rgba(3, 169, 244, 0.3)"></polygon>
+            <line id="adsr-base" x1="0" y1="380" x2="450" y2="380" stroke="#444"></line>
+            <circle id="attack-handle" data-draggable="adsr" cx="100" cy="280" r="10" fill="#03a9f4"></circle>
+            <circle id="decay-sustain-handle" data-draggable="adsr" cx="250" cy="330" r="10" fill="#03a9f4"></circle>
+            <circle id="release-handle" data-draggable="adsr" cx="350" cy="380" r="10" fill="#03a9f4"></circle>
+        </g>
+
+        <g id="delay-control">
+            <path d="M500 380 A 80 80 0 0 1 660 380" stroke="#444" stroke-width="2" fill="none"></path>
+            <path d="M520 380 A 60 60 0 0 1 640 380" stroke="#444" stroke-width="2" fill="none"></path>
+            <line x1="500" y1="380" x2="660" y2="380" stroke="#444"></line>
+            <circle id="delay-handle" data-draggable="delay" cx="580" cy="380" r="10" fill="#4caf50"></circle>
+        </g>
+        
+        <line id="lfo1-mod-line" x1="0" y1="0" x2="0" y2="0" stroke="#f44336" stroke-width="2" stroke-dasharray="5,5" style="display: none;"></line>
+        <line id="lfo2-mod-line" x1="0" y1="0" x2="0" y2="0" stroke="#ba68c8" stroke-width="2" stroke-dasharray="5,5" style="display: none;"></line>
+        
+        <g id="sequencer">
+            <rect id="sequencer-bg" x="0" y="425" width="800" height="175" fill="#1e1e1e"></rect>
+            <g id="sequencer-grid"></g>
+            <line id="playhead" x1="10" y1="455" x2="10" y2="590" stroke="#ffd700" stroke-width="2" style="display: none;"></line>
+            <g id="sequencer-controls">
+                <g id="play-button" style="cursor: pointer;">
+                    <rect x="100" y="430" width="30" height="20" fill="#444"></rect>
+                    <path id="play-icon" d="M 110 435 L 110 445 L 120 440 Z" fill="#d4d4d4"></path>
+                    <rect id="stop-icon" x="109" y="434" width="12" height="12" fill="#d4d4d4" style="display: none;"></rect>
+                </g>
+                <g id="tempo-control">
+                    <line x1="150" y1="440" x2="320" y2="440" stroke="#444" stroke-width="4"></line>
+                    <circle id="tempo-handle" data-draggable="tempo" cx="235" cy="440" r="8" fill="#e91e63"></circle>
+                    <text id="tempo-label" x="330" y="445" fill="#d4d4d4" font-size="12">120 bpm</text>
+                </g>
+            </g>
+        </g>
+    </svg>
+    <script src="renderer.js"></script>
+</body>
+</html>
