@@ -1,16 +1,47 @@
 {
   "name": "sintetizador-xeometrico",
   "version": "1.0.0",
+  "description": "Un sintetizador gráfico experimental",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pack": "electron-builder",
+    "pack:linux": "electron-builder --linux",
+    "pack:win": "electron-builder --win"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "electron",
+    "synthesizer",
+    "synth",
+    "music"
+  ],
+  "author": "tonetxo",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "electron": "^37.2.4"
+    "electron": "^37.2.4",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.tonetxo.sintetizadorxeometrico",
+    "productName": "Sintetizador Xeométrico",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "AudioVideo;Audio;Sequencer"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
