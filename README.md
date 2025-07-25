@@ -31,7 +31,7 @@ Nos controis do secuenciador, atoparás dous botóns para gardar as túas creaci
 
 ## Como poñelo en marcha
 
-Descarga a AppImage en releases, ou...
+Descarga a AppImage en Releases, ou...
 
 Se descargaches o código, necesitarás ter Node.js instalado. Abre un terminal na carpeta do proxecto e executa:
 
