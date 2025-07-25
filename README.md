@@ -5,6 +5,7 @@
 ## Un lenzo para pintar con sons
 
 Este é un instrumento musical experimental. Non penses en notas ou escalas, senón en formas, cores e movementos. A interface é o propio instrumento. Toca, explora e descobre paisaxes sonoras.
+Por agora só para linux.
 
 ## Exploración Sonora
 
@@ -16,7 +17,9 @@ A clave deste sintetizador é a interacción directa. Non hai botóns nin menús
     *   **Figura azul (a forma):** Controla como ataca e como se esvaece cada nota. Podes crear desde "plinks" curtos e percusivos ata sons que medran e morren lentamente.
     *   **Semicírculo verde (o eco):** Engade repeticións e profundidade, creando unha sensación de espazo.
 
-*   **Botón dereito do rato:** Fai clic co botón dereito sobre os círculos para cambiar a súa "voz" interna ou as conexións. Verás como o pequeno debuxo do seu interior cambia, ou aparecen liñas conectando os círculos, ofrecendo novas paletas sonoras para explorar. 
+*   **Botón dereito do rato:** Fai clic co botón dereito sobre os círculos para cambiar a súa "voz" interna ou as conexións. Verás como o pequeno debuxo do seu interior cambia, ou aparecen liñas conectando os círculos, ofrecendo novas paletas sonoras para explorar.
+
+*   **Roda do rato:** Move a roda do rato sobre o anel circular, a pantalla parpadeará e modificará os parámetros....
 
 *   **Barra de espazo:** Mantén unha nota soando de forma indefinida. Cando arrastras un dos círculos centrais para crear un son, pulsa a barra de espazo. O son quedará "conxelado", permitíndoche seguir modificando outros parámetros mentres soa. Vólvea a pulsar para liberalo.
 
@@ -27,6 +30,8 @@ A clave deste sintetizador é a interacción directa. Non hai botóns nin menús
 Nos controis do secuenciador, atoparás dous botóns para gardar as túas creacións (presets) nun ficheiro e cargalos máis tarde.
 
 ## Como poñelo en marcha
+
+Descarga a AppImage en releases, ou...
 
 Se descargaches o código, necesitarás ter Node.js instalado. Abre un terminal na carpeta do proxecto e executa:
 
