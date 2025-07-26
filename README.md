@@ -4,7 +4,7 @@
 
 ## Un lenzo para pintar con sons
 
-Este é un instrumento musical experimental. Non penses en notas ou escalas, senón en formas, cores e movementos. A interface é o propio instrumento. Toca, explora e descobre paisaxes sonoras.
+Este é un instrumento musical experimental. Non penses en notas ou escalas, senón en formas, cores e movementos. A interface é o propio instrumento. Toca, explora e descubre paisaxes sonoras.
 Por agora só para linux.
 
 ## Exploración Sonora
@@ -21,7 +21,7 @@ A clave deste sintetizador é a interacción directa. Non hai botóns nin menús
 
 *   **Roda do rato:** Move a roda do rato sobre o anel circular, a pantalla parpadeará e modificará os parámetros....
 
-*   **Barra de espazo:** Mantén unha nota soando de forma indefinida. Cando arrastras un dos círculos centrais para crear un son, pulsa a barra de espazo. O son quedará "conxelado", permitíndoche seguir modificando outros parámetros mentres soa. Vólvea a pulsar para liberalo.
+*   **Barra de espazo:** Mantén unha nota soando de forma indefinida. Cando arrastras un dos círculos centrais para crear un son, pulsa a barra de espazo. O son quedará "conxelado", permitíndoche seguir modificando outros parámetros mentres soa. Vólvea pulsar para liberalo.
 
 *   **A reixa inferior (o ritmo):** É un secuenciador. Fai clic nos cadrados para debuxar patróns. O botón de Play/Stop e o control de tempo (bpm) permítenche crear bucles e melodías.
 
