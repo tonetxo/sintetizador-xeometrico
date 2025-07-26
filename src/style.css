@@ -1,3 +1,5 @@
+/* Ficheiro: style.css (MODIFICADO) */
+
 /* Estilo base da aplicación */
 body {
     background-color: #1e1e1e;
@@ -43,10 +45,9 @@ body {
     stroke-width: 1px;
     cursor: pointer;
     rx: 2;
+    /* A opacidade e a cor das celdas activas xestionaranse con JavaScript */
+    transition: opacity 0.1s ease, fill 0.1s ease; /* Transición suave */
 }
 .sequencer-cell:hover {
-    fill: #555555;
-}
-.sequencer-cell-active {
-    fill: #00bcd4;
+    stroke: #888; /* Resalta o borde ao pasar o rato */
 }

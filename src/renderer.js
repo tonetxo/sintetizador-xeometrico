@@ -38,6 +38,15 @@ let notaActiva = false;
 let dragContext = {};
 let sustainActivado = false; 
 let vco2TuningMode = 'relative';
+let tecladoNotaActiva = null; // Rastrea a nota do teclado
+let tecladoGlow = false; // Para o feedback visual do teclado
+
+const keyToMidiMap = {
+    // Teclas brancas (fila inferior)
+    'KeyA': 60, 'KeyS': 62, 'KeyD': 64, 'KeyF': 65, 'KeyG': 67, 'KeyH': 69, 'KeyJ': 71, 'KeyK': 72,
+    // Teclas negras (fila superior)
+    'KeyW': 61, 'KeyE': 63, 'KeyT': 66, 'KeyY': 68, 'KeyU': 70
+};
 
 // Obxecto de estado explícito para as posicións dos elementos principais
 let positionState = {
@@ -50,8 +59,8 @@ const formasDeOndaVCO2 = ['sine', 'square', 'triangle', 'sawtooth'];
 let vco1State = { ondaActual: 0 };
 let vco2State = { ondaActual: 0 };
 
-const lfo1Targets = { 'OFF': [], 'VCO1 Freq': ['vco1_freq'], 'VCF Freq': ['vcf_freq'] };
-const lfo2Targets = { 'OFF': [], 'VCO2 Detune': ['vco2_detune'], 'VCF Q': ['vcf_q'] };
+const lfo1Targets = { 'OFF': [], 'VCO1 Freq': ['vco1_freq'], 'VCF Freq': ['vcf_freq'], 'VCO2 Freq': ['vco2_freq'] };
+const lfo2Targets = { 'OFF': [], 'VCO1 Freq': ['vco1_freq'], 'VCO2 Detune': ['vco2_detune'], 'VCF Q': ['vcf_q'] };
 let lfo1State = { rate: 2, depth: 0, targetIndex: 0, targets: Object.keys(lfo1Targets) };
 let lfo2State = { rate: 0.5, depth: 0, targetIndex: 0, targets: Object.keys(lfo2Targets) };
 
@@ -65,6 +74,7 @@ let sequencerState = {
     steps: 16,
     notes: 12
 };
+// --- MODIFICADO: sequencerData agora almacena o volume (0.0 a 1.0) en vez de booleanos ---
 let sequencerData = [];
 
 if (vcoGroup.transform.baseVal.numberOfItems === 0) vcoGroup.transform.baseVal.appendItem(lenzo.createSVGTransform());
@@ -186,6 +196,8 @@ window.addEventListener('mousemove', (e) => {
 
     switch (dragContext.type) {
         case 'vco1':
+            actualizarVCO1(newPos.x, newPos.y);
+            break;
         case 'vco2':
             actualizarVCO1(newPos.x, newPos.y);
             const centroAbsolutoVCO = { x: 400 + positionState.vco.x, y: 180 + positionState.vco.y };
@@ -194,8 +206,10 @@ window.addEventListener('mousemove', (e) => {
         case 'lfo1':
         case 'lfo2':
             actualizarLFO1(newPos.x, newPos.y);
-            const centroAbsolutoLFO = { x: 100 + positionState.lfo.x, y: 100 + positionState.lfo.y };
-            actualizarLFO2(currentPoint.x - centroAbsolutoLFO.x, currentPoint.y - centroAbsolutoLFO.y);
+            // Desactivado segundo petición: o arrastre dos LFO non debe afectar ao LFO2.
+            // O LFO2 só se modifica coa roda do rato (rate).
+            // const centroAbsolutoLFO = { x: 100 + positionState.lfo.x, y: 100 + positionState.lfo.y };
+            // actualizarLFO2(currentPoint.x - centroAbsolutoLFO.x, currentPoint.y - centroAbsolutoLFO.y);
             break;
         case 'vcf':
             actualizarVCF(newPos.x, newPos.y);
@@ -223,20 +237,74 @@ window.addEventListener('mouseup', () => {
     dragContext = {};
 });
 
+window.addEventListener('keyup', (e) => {
+    // Se se solta a tecla que estaba a soar
+    if (keyToMidiMap[e.code] && e.code === tecladoNotaActiva) {
+        tecladoNotaActiva = null;
+        tecladoGlow = false;
+
+        if (!sustainActivado) {
+            notaActiva = false;
+            const now = audioContext.currentTime;
+            vca.gain.cancelScheduledValues(now);
+            vca.gain.setValueAtTime(vca.gain.value, now);
+            vca.gain.linearRampToValueAtTime(0, now + adsr.release);
+        }
+        // Actualiza o estado visual (elimina o glow se non hai sustain)
+        actualizarGlows(vco2.detune.value === 0, Math.abs(Math.round(vco2.detune.value)) === 700);
+    }
+});
+
 window.addEventListener('keydown', (e) => {
-    if (e.code !== 'Space' || !notaActiva) return;
-    e.preventDefault(); 
-    sustainActivado = !sustainActivado;
-    if (sustainActivado) {
-        vco1Circle.setAttribute('stroke', '#80deea');
-        vco1Circle.setAttribute('stroke-width', '4');
-    } else {
-        notaActiva = false;
-        const now = audioContext.currentTime;
-        vca.gain.cancelScheduledValues(now);
-        vca.gain.setValueAtTime(vca.gain.value, now);
-        vca.gain.linearRampToValueAtTime(0, now + adsr.release);
-        actualizarGlows(false, false);
+    // 1. Xestión do Sustain (barra espaciadora)
+    if (e.code === 'Space') {
+        if (!notaActiva) return;
+        e.preventDefault();
+        sustainActivado = !sustainActivado;
+        actualizarGlows(vco2.detune.value === 0, Math.abs(Math.round(vco2.detune.value)) === 700);
+
+        // Se se desactiva o sustain e non hai ningunha tecla pulsada, apaga a nota
+        if (!sustainActivado && !tecladoNotaActiva) {
+            notaActiva = false;
+            const now = audioContext.currentTime;
+            vca.gain.cancelScheduledValues(now);
+            vca.gain.setValueAtTime(vca.gain.value, now);
+            vca.gain.linearRampToValueAtTime(0, now + adsr.release);
+        }
+        return;
+    }
+
+    // 2. Xestión do Teclado Musical
+    const midiNote = keyToMidiMap[e.code];
+    if (midiNote && !e.repeat) {
+        if (!audioContext) inicializarAudio();
+
+        const freq = midiToFreq(midiNote);
+        if (vco1) vco1.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
+        if (vco2) {
+            if (vco2TuningMode === 'relative') {
+                vco2.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
+            } else {
+                const currentBaseFreq = vco1.frequency.value;
+                const detuneHz = vco2.frequency.value - currentBaseFreq;
+                vco2.frequency.setTargetAtTime(freq + detuneHz, audioContext.currentTime, 0.01);
+            }
+        }
+
+        // Se non hai unha nota do teclado soando, dispara a envolvente completa
+        if (!tecladoNotaActiva) {
+            notaActiva = true;
+            sustainActivado = false; // Cada nova nota resetea o sustain
+            const now = audioContext.currentTime;
+            vca.gain.cancelScheduledValues(now);
+            vca.gain.setValueAtTime(0, now);
+            vca.gain.linearRampToValueAtTime(1.0, now + adsr.attack);
+            vca.gain.linearRampToValueAtTime(adsr.sustain, now + adsr.attack + adsr.decay);
+        }
+
+        tecladoNotaActiva = e.code;
+        tecladoGlow = true;
+        actualizarGlows(vco2.detune.value === 0, Math.abs(Math.round(vco2.detune.value)) === 700);
     }
 });
 
@@ -296,7 +364,8 @@ lenzo.addEventListener('wheel', (e) => {
         const step = e.shiftKey ? 2 : 10;
         let currentY = parseFloat(vcfControl.getAttribute('y'));
         let newY = currentY + (direction * step);
-        newY = Math.max(80, Math.min(260, newY));
+        // Límites correctos para a roda do rato, con marxe de 1px
+        newY = Math.max(1, Math.min(380, newY)); 
         actualizarVCF(parseFloat(vcfControl.getAttribute('x')), newY);
     }
 
@@ -361,7 +430,9 @@ function cambiarDestinoLFO(numLFO, isInitial = false) {
         if(!depthNode) return;
         switch(dest) {
             case 'vco1_freq': if(vco1) depthNode.connect(vco1.frequency); break;
-            case 'vco2_detune': if(vco2) depthNode.connect(vco2.detune); break;
+            case 'vco2_detune':
+            case 'vco2_freq':
+                if(vco2) depthNode.connect(vco2.detune); break;
             case 'vcf_freq': if(vcf) depthNode.connect(vcf.frequency); break;
             case 'vcf_q': if(vcf) depthNode.connect(vcf.Q); break;
         }
@@ -392,8 +463,30 @@ function cambiarModoAfinacionVCO2() {
     actualizarVCO2(0, 0); 
 }
 
+// --- NOVO: Función para obter a cor da celda segundo a nota ---
+function notaACor(nota) {
+    // nota vai de 0 a 11
+    const hue = mapearRango(nota, 0, sequencerState.notes - 1, 0, 300); // Rango de cor: de Vermello a Maxenta
+    return `hsl(${hue}, 90%, 55%)`;
+}
+
+// --- NOVO: Función para actualizar o estilo visual dunha celda ---
+function actualizarEstiloCelda(cell, nota, volume) {
+    if (volume > 0) {
+        cell.style.fill = notaACor(nota);
+        // A opacidade mínima será 0.2 (para que sexa visible) e a máxima 1.0
+        cell.style.opacity = 0.2 + volume * 0.8;
+    } else {
+        // Restaura o estilo de celda inactiva
+        cell.style.fill = '#3c3c3c';
+        cell.style.opacity = '1';
+    }
+}
+
+// --- MODIFICADO: inicializarSequencer agora usa volumes e engade eventos de roda ---
 function inicializarSequencer() {
-    sequencerData = Array(sequencerState.steps).fill(null).map(() => Array(sequencerState.notes).fill(false));
+    // Agora o array almacena o volume de cada paso (0.0 a 1.0)
+    sequencerData = Array(sequencerState.steps).fill(null).map(() => Array(sequencerState.notes).fill(0.0));
     
     const gridRect = document.querySelector("#sequencer rect");
     const cellWidth = parseFloat(gridRect.getAttribute('width')) / sequencerState.steps;
@@ -402,9 +495,9 @@ function inicializarSequencer() {
     const startY = parseFloat(gridRect.getAttribute('y')) + 30;
 
     for (let step = 0; step < sequencerState.steps; step++) {
-        for (let note = 0; note < sequencerState.notes; note++) {
+        for (let noteIdx = 0; noteIdx < sequencerState.notes; noteIdx++) {
             const x = startX + step * cellWidth;
-            const y = startY + note * cellHeight;
+            const y = startY + noteIdx * cellHeight;
             
             const cell = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             cell.setAttribute('class', 'sequencer-cell');
@@ -412,14 +505,33 @@ function inicializarSequencer() {
             cell.setAttribute('y', y);
             cell.setAttribute('width', cellWidth);
             cell.setAttribute('height', cellHeight);
+            
+            const note = sequencerState.notes - 1 - noteIdx;
             cell.dataset.step = step;
-            cell.dataset.note = sequencerState.notes - 1 - note;
+            cell.dataset.note = note;
 
+            // Evento de clic: Activa (vol=1) ou desactiva (vol=0) a nota
             cell.addEventListener('click', () => {
-                const isActive = sequencerData[step][cell.dataset.note];
-                sequencerData[step][cell.dataset.note] = !isActive;
-                cell.classList.toggle('sequencer-cell-active', !isActive);
+                const currentVolume = sequencerData[step][note];
+                const newVolume = currentVolume > 0 ? 0.0 : 1.0;
+                sequencerData[step][note] = newVolume;
+                actualizarEstiloCelda(cell, note, newVolume);
             });
+
+            // Evento de roda do rato: Axusta o volume
+            cell.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const direction = -Math.sign(e.deltaY); // Invertemos para que a roda cara arriba suba o volume
+                let currentVolume = sequencerData[step][note];
+                let newVolume = currentVolume + direction * 0.1; // Axuste en pasos de 0.1
+                newVolume = Math.max(0.0, Math.min(1.0, newVolume)); // Limitamos entre 0.0 e 1.0
+                newVolume = Math.round(newVolume * 10) / 10; // Redondeamos para evitar problemas con decimais
+
+                sequencerData[step][note] = newVolume;
+                actualizarEstiloCelda(cell, note, newVolume);
+                mostrarFeedbackRoda(); // Mostra feedback visual
+            });
+
             sequencerGrid.appendChild(cell);
         }
     }
@@ -444,17 +556,24 @@ function startStopSequencer() {
     }
 }
 
+// --- MODIFICADO: tick agora busca a nota activa e o seu volume ---
 function tick() {
     const step = sequencerState.currentStep;
-    const notesToPlay = [];
+    
+    let noteToPlay = null;
+    // Buscamos a nota máis aguda activa nese paso
     for (let note = 0; note < sequencerState.notes; note++) {
-        if (sequencerData[step][note]) {
-            notesToPlay.push(60 + note);
+        const volume = sequencerData[step][note];
+        if (volume > 0) {
+            noteToPlay = { 
+                midiNote: 60 + note, // Asumimos C4 = 60
+                volume: volume 
+            };
         }
     }
 
-    if (notesToPlay.length > 0) {
-        triggerSequencerNote(notesToPlay);
+    if (noteToPlay) {
+        triggerSequencerNote(noteToPlay);
     }
 
     const gridRect = document.querySelector("#sequencer rect");
@@ -471,16 +590,15 @@ function tick() {
     sequencerState.currentStep = (step + 1) % sequencerState.steps;
 }
 
-// --- FUNCIÓN CORRIXIDA ---
-function triggerSequencerNote(midiNotes) {
+// --- MODIFICADO: triggerSequencerNote agora acepta un obxecto con nota e volume ---
+function triggerSequencerNote(noteData) {
     const now = audioContext.currentTime;
     const noteDuration = (60 / sequencerState.tempo / 4) * 0.9;
     
-    // Comproba se a onda activa do VCO1 é ruído
     const isNoiseActive = formasDeOndaVCO1[vco1State.ondaActual] === 'noise';
 
     if (!isNoiseActive) {
-        const freq = midiToFreq(midiNotes[0]);
+        const freq = midiToFreq(noteData.midiNote);
         vco1.frequency.setValueAtTime(freq, now);
         if(vco2TuningMode === 'relative') {
             vco2.frequency.setValueAtTime(freq, now);
@@ -489,13 +607,14 @@ function triggerSequencerNote(midiNotes) {
             vco2.frequency.setValueAtTime(freq + detuneHz, now);
         }
     }
-    // Se é ruído, non facemos nada coa frecuencia, simplemente disparamos a envolvente
-
-    // Dispara a envolvente
+    
+    // Dispara a envolvente usando o volume da nota
     vca.gain.cancelScheduledValues(now);
     vca.gain.setValueAtTime(0, now);
-    vca.gain.linearRampToValueAtTime(1.0, now + adsr.attack);
-    vca.gain.linearRampToValueAtTime(adsr.sustain, now + adsr.attack + adsr.decay);
+    // O ataque vai ata o volume específico da nota
+    vca.gain.linearRampToValueAtTime(noteData.volume, now + adsr.attack);
+    // O sustain tamén se escala segundo o volume da nota
+    vca.gain.linearRampToValueAtTime(adsr.sustain * noteData.volume, now + adsr.attack + adsr.decay);
     vca.gain.setTargetAtTime(0, now + noteDuration - adsr.release, 0.01);
 }
 
@@ -517,7 +636,6 @@ function actualizarVCO1(x, y) {
     const clampedY = Math.max(-140, Math.min(140, y));
     vcoGroup.transform.baseVal.getItem(0).setTranslate(clampedX, clampedY);
     
-    // Actualiza o estado da posición
     positionState.vco.x = clampedX;
     positionState.vco.y = clampedY;
 
@@ -586,7 +704,6 @@ function actualizarLFO1(x, y) {
     const clampedY = Math.max(-100, Math.min(250, y));
     lfoGroup.transform.baseVal.getItem(0).setTranslate(clampedX, clampedY);
     
-    // Actualiza o estado da posición
     positionState.lfo.x = clampedX;
     positionState.lfo.y = clampedY;
 
@@ -597,6 +714,11 @@ function actualizarLFO1(x, y) {
     
     if (lfo1Node) lfo1Node.frequency.setTargetAtTime(lfo1State.rate, audioContext.currentTime, 0.01);
     if (lfo1Depth) lfo1Depth.gain.setTargetAtTime(lfo1State.depth * 2000, audioContext.currentTime, 0.01);
+
+    // A profundidade do LFO2 vincúlase á do LFO1 para que teña efecto
+    lfo2State.depth = lfo1State.depth;
+    if (lfo2Depth) lfo2Depth.gain.setTargetAtTime(lfo2State.depth * 25, audioContext.currentTime, 0.01);
+
     actualizarLineasModulacion();
 }
 
@@ -614,23 +736,40 @@ function actualizarLineasModulacion() {
         const line = (numLFO === 1) ? lfo1ModLine : lfo2ModLine;
         const state = (numLFO === 1) ? lfo1State : lfo2State;
         const targetKey = state.targets[state.targetIndex];
-        if (targetKey === 'OFF') { line.style.display = 'none'; return; }
+
+        if (targetKey === 'OFF') {
+            line.style.display = 'none';
+            return;
+        }
 
         const lfoMatrix = lfoGroup.transform.baseVal.getItem(0).matrix;
         line.setAttribute('x1', lfoMatrix.e + 100);
         line.setAttribute('y1', lfoMatrix.f + 100);
 
-        let targetX, targetY;
-        if (targetKey.includes('VCO')) {
+        let targetX, targetY, targetColor;
+
+        if (targetKey.includes('VCO1')) {
             const vcoMatrix = vcoGroup.transform.baseVal.getItem(0).matrix;
             targetX = vcoMatrix.e + 400;
             targetY = vcoMatrix.f + 180;
-        } else {
+            targetColor = vco1Circle.getAttribute('fill');
+        } else if (targetKey.includes('VCO2')) {
+            const vcoMatrix = vcoGroup.transform.baseVal.getItem(0).matrix;
+            targetX = vcoMatrix.e + 400;
+            targetY = vcoMatrix.f + 125; // Apunta á forma de onda do VCO2
+            targetColor = vco2Circle.getAttribute('fill');
+        } else if (targetKey.includes('VCF')) {
             targetX = parseFloat(vcfJack.getAttribute('cx'));
             targetY = parseFloat(vcfJack.getAttribute('cy'));
+            targetColor = vcfControl.getAttribute('fill');
+        } else {
+            line.style.display = 'none';
+            return;
         }
+
         line.setAttribute('x2', targetX);
         line.setAttribute('y2', targetY);
+        line.setAttribute('stroke', targetColor);
         line.style.display = 'block';
     });
 }
@@ -638,8 +777,18 @@ function actualizarLineasModulacion() {
 function actualizarVCF(x, y) {
     const vcfW = parseFloat(vcfControl.getAttribute('width'));
     const clampedX = Math.max(0, Math.min(800 - vcfW, x));
-    const clampedY = Math.max(0, Math.min(400 - 20, y));
-    const newHeight = Math.max(1, 400 - clampedY);
+
+    // Límites verticais definitivos para o TOPO do rectángulo
+    const yMin = 1;   // Marxe de 1px para previr o bug do borde
+    const yMax = 380; // Base aliñada co ADSR
+    
+    const maxHeight = yMax - yMin;
+
+    // Asegura que a posición Y do rato se manteña dentro dos límites
+    const clampedY = Math.max(yMin, Math.min(yMax, y));
+    
+    // A altura calcúlase sempre dende a base (yMax)
+    const newHeight = Math.max(1, yMax - clampedY);
 
     vcfControl.setAttribute('x', clampedX);
     vcfControl.setAttribute('y', clampedY);
@@ -649,7 +798,7 @@ function actualizarVCF(x, y) {
     vcfJack.setAttribute('cy', clampedY);
 
     const freq = Math.exp(mapearRango(clampedX, 0, 800 - vcfW, Math.log(20), Math.log(20000)));
-    const q = mapearRango(newHeight, 1, 400, 0.1, 25);
+    const q = mapearRango(newHeight, 1, maxHeight, 0.1, 25);
     if (vcf) {
         vcf.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
         vcf.Q.setTargetAtTime(q, audioContext.currentTime, 0.01);
@@ -776,6 +925,7 @@ async function cargarConfiguracion() {
     }
 }
 
+// --- MODIFICADO: aplicarConfiguracion agora restaura o estilo de cada celda ---
 function aplicarConfiguracion(settings) {
     try {
         if (!settings || !settings.positions || !settings.states) {
@@ -820,16 +970,15 @@ function aplicarConfiguracion(settings) {
         cambiarDestinoLFO(1, true);
         cambiarDestinoLFO(2, true);
 
+        // Actualiza o visual de cada celda do secuenciador segundo os datos cargados
         const cells = document.querySelectorAll('.sequencer-cell');
         cells.forEach(cell => {
             const step = parseInt(cell.dataset.step, 10);
             const note = parseInt(cell.dataset.note, 10);
-            const isActive = sequencerData && sequencerData[step] && sequencerData[step][note];
-            if (isActive) {
-                cell.classList.add('sequencer-cell-active');
-            } else {
-                cell.classList.remove('sequencer-cell-active');
-            }
+            const volume = (sequencerData && sequencerData[step] && sequencerData[step][note] !== undefined)
+                           ? sequencerData[step][note]
+                           : 0;
+            actualizarEstiloCelda(cell, note, volume);
         });
         
         console.log("Configuración aplicada con éxito.");
@@ -858,7 +1007,7 @@ function actualizarGlows(unison, fifth) {
         vco1Circle.setAttribute('stroke-width', '2');
         vco2Circle.setAttribute('stroke', fifthGlowColor);
         vco2Circle.setAttribute('stroke-width', '3');
-    } else if (sustainGlow) {
+    } else if (sustainGlow || tecladoGlow) {
         vco1Circle.setAttribute('stroke', '#80deea');
         vco1Circle.setAttribute('stroke-width', '4');
     }
@@ -909,8 +1058,6 @@ function createWhiteNoiseBuffer(audioContext) {
 document.addEventListener('DOMContentLoaded', () => {
     inicializarSequencer();
     actualizarValoresSintetizador();
-    // Engade os listeners para os novos botóns
     saveButton.addEventListener('click', gardarConfiguracion);
     loadButton.addEventListener('click', cargarConfiguracion);
 });
-
