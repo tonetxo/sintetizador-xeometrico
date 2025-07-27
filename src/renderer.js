@@ -1,4 +1,4 @@
-// Ficheiro: src/renderer.js (VERSIÓN FINAL, COMPLETA E VERIFICADA)
+// Ficheiro: src/renderer.js (VERSIÓN ESTABLE E CORREXIDA)
 
 // --- 1. REFERENCIAS Á GUI ---
 const lenzo = document.getElementById('lenzo-sintetizador');
@@ -19,6 +19,7 @@ const lfo1ModLine = document.getElementById('lfo1-mod-line');
 const lfo2ModLine = document.getElementById('lfo2-mod-line');
 const adsrShape = document.getElementById('adsr-shape');
 const delayHandle = document.getElementById('delay-handle');
+const ringModGroup = document.getElementById('ring-mod-group');
 const sequencerGrid = document.getElementById('sequencer-grid');
 const playButton = document.getElementById('play-button');
 const playIcon = document.getElementById('play-icon');
@@ -33,25 +34,24 @@ const loadButton = document.getElementById('load-button');
 let audioContext;
 let vco1, vco2, vcf, vca, noiseGenerator, lfo1Node, lfo2Node;
 let vco2Gain, masterGain, lfo1Depth, lfo2Depth;
-let delayNode, feedbackNode, dryGain, wetGain;
+let delayNode, feedbackNode, dryGain, wetGain, limiter;
+let ringModulator, ringModDry, ringModWet;
 let notaActiva = false;
 let dragContext = {};
-let sustainActivado = false; 
+let sustainActivado = false;
 let vco2TuningMode = 'relative';
-let tecladoNotaActiva = null; // Rastrea a nota do teclado
-let tecladoGlow = false; // Para o feedback visual do teclado
+let tecladoNotaActiva = null;
+let tecladoGlow = false;
 
 const keyToMidiMap = {
-    // Teclas brancas (fila inferior)
     'KeyA': 60, 'KeyS': 62, 'KeyD': 64, 'KeyF': 65, 'KeyG': 67, 'KeyH': 69, 'KeyJ': 71, 'KeyK': 72,
-    // Teclas negras (fila superior)
     'KeyW': 61, 'KeyE': 63, 'KeyT': 66, 'KeyY': 68, 'KeyU': 70
 };
 
-// Obxecto de estado explícito para as posicións dos elementos principais
 let positionState = {
     vco: { x: 0, y: 0 },
-    lfo: { x: 0, y: 0 }
+    lfo: { x: 0, y: 0 },
+    ringMod: { x: 0, y: 0 }
 };
 
 const formasDeOndaVCO1 = ['sine', 'square', 'triangle', 'sawtooth', 'noise'];
@@ -74,11 +74,12 @@ let sequencerState = {
     steps: 16,
     notes: 12
 };
-// --- MODIFICADO: sequencerData agora almacena o volume (0.0 a 1.0) en vez de booleanos ---
 let sequencerData = [];
 
 if (vcoGroup.transform.baseVal.numberOfItems === 0) vcoGroup.transform.baseVal.appendItem(lenzo.createSVGTransform());
 if (lfoGroup.transform.baseVal.numberOfItems === 0) lfoGroup.transform.baseVal.appendItem(lenzo.createSVGTransform());
+if (ringModGroup && ringModGroup.transform.baseVal.numberOfItems === 0) ringModGroup.transform.baseVal.appendItem(lenzo.createSVGTransform());
+
 
 // --- 3. MOTOR DE AUDIO ---
 function inicializarAudio() {
@@ -87,7 +88,7 @@ function inicializarAudio() {
         return;
     }
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    
+
     vco1 = audioContext.createOscillator();
     vco2 = audioContext.createOscillator();
     vco2Gain = audioContext.createGain();
@@ -105,14 +106,39 @@ function inicializarAudio() {
     feedbackNode = audioContext.createGain();
     dryGain = audioContext.createGain();
     wetGain = audioContext.createGain();
+    limiter = audioContext.createDynamicsCompressor();
+    ringModulator = audioContext.createGain();
+    ringModDry = audioContext.createGain();
+    ringModWet = audioContext.createGain();
+    
+    limiter.threshold.setValueAtTime(-3, audioContext.currentTime);
+    limiter.knee.setValueAtTime(0, audioContext.currentTime);
+    limiter.ratio.setValueAtTime(20, audioContext.currentTime);
+    limiter.attack.setValueAtTime(0, audioContext.currentTime);
+    limiter.release.setValueAtTime(0.1, audioContext.currentTime);
 
-    vco2.connect(vco2Gain).connect(vcf);
+    noiseGenerator.connect(vcf);
+
+    vco1.connect(ringModDry);
+    vco2.connect(vco2Gain);
+    vco2Gain.connect(ringModDry);
+
+    vco1.connect(ringModulator);
+    vco2.connect(ringModulator.gain);
+    ringModulator.connect(ringModWet);
+
+    ringModDry.connect(vcf);
+    ringModWet.connect(vcf);
+
     vcf.connect(vca).connect(masterGain);
-    masterGain.connect(dryGain).connect(audioContext.destination);
+    masterGain.connect(dryGain);
     masterGain.connect(delayNode);
     delayNode.connect(feedbackNode).connect(delayNode);
-    delayNode.connect(wetGain).connect(audioContext.destination);
-    
+    delayNode.connect(wetGain);
+    dryGain.connect(limiter);
+    wetGain.connect(limiter);
+    limiter.connect(audioContext.destination);
+
     lfo1Node.connect(lfo1Depth);
     lfo2Node.connect(lfo2Depth);
 
@@ -131,13 +157,15 @@ function inicializarAudio() {
     lfo2Node.type = 'triangle';
     lfo1Depth.gain.value = 0;
     lfo2Depth.gain.value = 0;
-    
+    ringModDry.gain.value = 1;
+    ringModWet.gain.value = 0;
+
     vco1.start();
     vco2.start();
     lfo1Node.start();
     lfo2Node.start();
     noiseGenerator.start();
-    
+
     cambiarFormaDeOnda(1, true);
     cambiarFormaDeOnda(2, true);
     cambiarDestinoLFO(1, true);
@@ -149,30 +177,25 @@ function inicializarAudio() {
 lenzo.addEventListener('mousedown', (e) => {
     if (e.button !== 0) return;
     if (!audioContext) inicializarAudio();
-    
     const target = e.target.closest('[data-draggable]');
     if (!target) return;
-    
     e.preventDefault();
     const startPoint = getSvgCoordinates(e.clientX, e.clientY);
     const type = target.dataset.draggable;
     dragContext = { target, type, startPoint };
 
-    if (type.startsWith('vco')) {
-        dragContext.initialPos = { x: positionState.vco.x, y: positionState.vco.y };
-    } else if (type.startsWith('lfo')) {
-        dragContext.initialPos = { x: positionState.lfo.x, y: positionState.lfo.y };
-    } else {
-        dragContext.initialPos = {
+    if (type.startsWith('vco')) dragContext.initialPos = { x: positionState.vco.x, y: positionState.vco.y };
+    else if (type.startsWith('lfo')) dragContext.initialPos = { x: positionState.lfo.x, y: positionState.lfo.y };
+    else if (type.startsWith('ring-mod')) dragContext.initialPos = { x: positionState.ringMod.x, y: positionState.ringMod.y };
+    else dragContext.initialPos = {
             x: parseFloat(target.getAttribute('x')) || parseFloat(target.getAttribute('cx')),
             y: parseFloat(target.getAttribute('y')) || parseFloat(target.getAttribute('cy'))
         };
-    }
 
     if (type.startsWith('vco') && !notaActiva) {
         notaActiva = true;
         sustainActivado = false;
-        restaurarEstiloVCO(); 
+        restaurarEstiloVCO();
         const now = audioContext.currentTime;
         vca.gain.cancelScheduledValues(now);
         vca.gain.setValueAtTime(vca.gain.value, now);
@@ -206,10 +229,9 @@ window.addEventListener('mousemove', (e) => {
         case 'lfo1':
         case 'lfo2':
             actualizarLFO1(newPos.x, newPos.y);
-            // Desactivado segundo petición: o arrastre dos LFO non debe afectar ao LFO2.
-            // O LFO2 só se modifica coa roda do rato (rate).
-            // const centroAbsolutoLFO = { x: 100 + positionState.lfo.x, y: 100 + positionState.lfo.y };
-            // actualizarLFO2(currentPoint.x - centroAbsolutoLFO.x, currentPoint.y - centroAbsolutoLFO.y);
+            break;
+        case 'ring-mod':
+            actualizarRingMod(newPos.x, newPos.y);
             break;
         case 'vcf':
             actualizarVCF(newPos.x, newPos.y);
@@ -238,11 +260,9 @@ window.addEventListener('mouseup', () => {
 });
 
 window.addEventListener('keyup', (e) => {
-    // Se se solta a tecla que estaba a soar
     if (keyToMidiMap[e.code] && e.code === tecladoNotaActiva) {
         tecladoNotaActiva = null;
         tecladoGlow = false;
-
         if (!sustainActivado) {
             notaActiva = false;
             const now = audioContext.currentTime;
@@ -250,20 +270,16 @@ window.addEventListener('keyup', (e) => {
             vca.gain.setValueAtTime(vca.gain.value, now);
             vca.gain.linearRampToValueAtTime(0, now + adsr.release);
         }
-        // Actualiza o estado visual (elimina o glow se non hai sustain)
         actualizarGlows(vco2.detune.value === 0, Math.abs(Math.round(vco2.detune.value)) === 700);
     }
 });
 
 window.addEventListener('keydown', (e) => {
-    // 1. Xestión do Sustain (barra espaciadora)
     if (e.code === 'Space') {
         if (!notaActiva) return;
         e.preventDefault();
         sustainActivado = !sustainActivado;
         actualizarGlows(vco2.detune.value === 0, Math.abs(Math.round(vco2.detune.value)) === 700);
-
-        // Se se desactiva o sustain e non hai ningunha tecla pulsada, apaga a nota
         if (!sustainActivado && !tecladoNotaActiva) {
             notaActiva = false;
             const now = audioContext.currentTime;
@@ -274,52 +290,48 @@ window.addEventListener('keydown', (e) => {
         return;
     }
 
-    // 2. Xestión do Teclado Musical
     const midiNote = keyToMidiMap[e.code];
     if (midiNote && !e.repeat) {
         if (!audioContext) inicializarAudio();
-
         const freq = midiToFreq(midiNote);
-        if (vco1) vco1.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
-        if (vco2) {
+        const now = audioContext.currentTime;
+        const microGlideTime = 0.005;
+
+        if (vco1) vco1.frequency.linearRampToValueAtTime(freq, now + microGlideTime);
+        if (vco2 && (!ringModWet || ringModWet.gain.value < 0.01)) {
             if (vco2TuningMode === 'relative') {
-                vco2.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
+                vco2.frequency.linearRampToValueAtTime(freq, now + microGlideTime);
             } else {
                 const currentBaseFreq = vco1.frequency.value;
                 const detuneHz = vco2.frequency.value - currentBaseFreq;
-                vco2.frequency.setTargetAtTime(freq + detuneHz, audioContext.currentTime, 0.01);
+                vco2.frequency.linearRampToValueAtTime(freq + detuneHz, now + microGlideTime);
             }
         }
-
-        // Se non hai unha nota do teclado soando, dispara a envolvente completa
         if (!tecladoNotaActiva) {
             notaActiva = true;
-            sustainActivado = false; // Cada nova nota resetea o sustain
-            const now = audioContext.currentTime;
+            sustainActivado = false;
             vca.gain.cancelScheduledValues(now);
-            vca.gain.setValueAtTime(0, now);
+            vca.gain.setValueAtTime(vca.gain.value, now);
             vca.gain.linearRampToValueAtTime(1.0, now + adsr.attack);
             vca.gain.linearRampToValueAtTime(adsr.sustain, now + adsr.attack + adsr.decay);
         }
-
         tecladoNotaActiva = e.code;
         tecladoGlow = true;
         actualizarGlows(vco2.detune.value === 0, Math.abs(Math.round(vco2.detune.value)) === 700);
     }
 });
 
+
 lenzo.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     if (!audioContext) inicializarAudio();
     const target = e.target.closest('[data-draggable]');
     if (!target) return;
-
     const type = target.dataset.draggable;
     if (e.shiftKey && type === 'vco2') {
         cambiarModoAfinacionVCO2();
         return;
     }
-
     switch (type) {
         case 'vco1': cambiarFormaDeOnda(1); break;
         case 'vco2': cambiarFormaDeOnda(2); break;
@@ -345,18 +357,22 @@ lenzo.addEventListener('wheel', (e) => {
         const roundedDetune = Math.round(newDetune);
         actualizarGlows(roundedDetune === 0, Math.abs(roundedDetune) === 700);
     }
+
     if (target.id === 'lfo2-circle' || target.id === 'lfo1-circle') {
         e.preventDefault();
         feedback = true;
         const lfoState = target.id === 'lfo1-circle' ? lfo1State : lfo2State;
         const lfoNode = target.id === 'lfo1-circle' ? lfo1Node : lfo2Node;
         const direction = Math.sign(e.deltaY);
-        const step = e.shiftKey ? 0.05 : 0.5;
-        let newRate = lfoState.rate - (direction * step);
+        const step = e.shiftKey ? 1.02 : 1.1;
+        let newRate;
+        if (direction < 0) newRate = lfoState.rate * step;
+        else newRate = lfoState.rate / step;
         newRate = Math.max(0.1, Math.min(20, newRate));
         lfoState.rate = newRate;
         if(lfoNode) lfoNode.frequency.setTargetAtTime(newRate, audioContext.currentTime, 0.01);
     }
+
     if (target.id === 'vcf') {
         e.preventDefault();
         feedback = true;
@@ -364,25 +380,18 @@ lenzo.addEventListener('wheel', (e) => {
         const step = e.shiftKey ? 2 : 10;
         let currentY = parseFloat(vcfControl.getAttribute('y'));
         let newY = currentY + (direction * step);
-        // Límites correctos para a roda do rato, con marxe de 1px
         newY = Math.max(1, Math.min(380, newY)); 
         actualizarVCF(parseFloat(vcfControl.getAttribute('x')), newY);
     }
 
-    if (feedback) {
-        mostrarFeedbackRoda();
-    }
+    if (feedback) mostrarFeedbackRoda();
 });
-
-playButton.addEventListener('click', startStopSequencer);
 
 // --- 5. FUNCIÓNS DE CONTROL ---
 function mostrarFeedbackRoda() {
     document.body.style.transition = 'background-color 0.05s ease-in-out';
     document.body.style.backgroundColor = '#333';
-    setTimeout(() => {
-        document.body.style.backgroundColor = ''; 
-    }, 100);
+    setTimeout(() => { document.body.style.backgroundColor = ''; }, 100);
 }
 
 function restaurarEstiloVCO() {
@@ -396,18 +405,19 @@ function restaurarEstiloVCO() {
 function cambiarFormaDeOnda(numVCO, isInitial = false) {
     const state = (numVCO === 1) ? vco1State : vco2State;
     const formas = (numVCO === 1) ? formasDeOndaVCO1 : formasDeOndaVCO2;
-    if (!isInitial) {
-        state.ondaActual = (state.ondaActual + 1) % formas.length;
-    }
+    if (!isInitial) state.ondaActual = (state.ondaActual + 1) % formas.length;
     const novaOnda = formas[state.ondaActual];
+    
     if (numVCO === 1) {
-        vco1.disconnect();
-        if (noiseGenerator.numberOfOutputs > 0) noiseGenerator.disconnect();
+        if (vco1 && vco1.numberOfOutputs > 0) vco1.disconnect();
+        if (noiseGenerator && noiseGenerator.numberOfOutputs > 0) noiseGenerator.disconnect();
+
         if (novaOnda === 'noise') {
             noiseGenerator.connect(vcf);
         } else {
             vco1.type = novaOnda;
-            vco1.connect(vcf);
+            vco1.connect(ringModDry);
+            vco1.connect(ringModulator);
         }
     } else if (numVCO === 2 && vco2) {
         vco2.type = novaOnda;
@@ -419,9 +429,7 @@ function cambiarFormaDeOnda(numVCO, isInitial = false) {
 
 function cambiarDestinoLFO(numLFO, isInitial = false) {
     const state = (numLFO === 1) ? lfo1State : lfo2State;
-    if (!isInitial) {
-        state.targetIndex = (state.targetIndex + 1) % state.targets.length;
-    }
+    if (!isInitial) state.targetIndex = (state.targetIndex + 1) % state.targets.length;
     const depthNode = (numLFO === 1) ? lfo1Depth : lfo2Depth;
     if(depthNode) depthNode.disconnect();
     const targetKey = state.targets[state.targetIndex];
@@ -429,15 +437,26 @@ function cambiarDestinoLFO(numLFO, isInitial = false) {
     connections.forEach(dest => {
         if(!depthNode) return;
         switch(dest) {
-            case 'vco1_freq': if(vco1) depthNode.connect(vco1.frequency); break;
-            case 'vco2_detune':
-            case 'vco2_freq':
-                if(vco2) depthNode.connect(vco2.detune); break;
-            case 'vcf_freq': if(vcf) depthNode.connect(vcf.frequency); break;
-            case 'vcf_q': if(vcf) depthNode.connect(vcf.Q); break;
+            case 'vco1_freq': 
+                if(vco1) depthNode.connect(vco1.frequency); 
+                break;
+            case 'vco2_freq': 
+                if(vco2) depthNode.connect(vco2.frequency); 
+                break;
+            case 'vco2_detune': 
+                if(vco2) depthNode.connect(vco2.detune); 
+                break;
+            case 'vcf_freq': 
+                if(vcf) depthNode.connect(vcf.frequency); 
+                break;
+            case 'vcf_q': 
+                if(vcf) depthNode.connect(vcf.Q); 
+                break;
         }
     });
     actualizarLineasModulacion();
+    // Forzar actualización da intensidade para que o cambio sexa inmediato
+    actualizarLFO1(positionState.lfo.x, positionState.lfo.y); 
 }
 
 function cambiarModoAfinacionVCO2() {
@@ -460,35 +479,31 @@ function cambiarModoAfinacionVCO2() {
         const plusIndicator = document.getElementById('vco2-fixed-indicator');
         if (plusIndicator) plusIndicator.remove();
     }
-    actualizarVCO2(0, 0); 
+    actualizarVCO2(0, 0);
 }
 
-// --- NOVO: Función para obter a cor da celda segundo a nota ---
 function notaACor(nota) {
-    // nota vai de 0 a 11
-    const hue = mapearRango(nota, 0, sequencerState.notes - 1, 0, 300); // Rango de cor: de Vermello a Maxenta
+    const hue = mapearRango(nota, 0, sequencerState.notes - 1, 0, 300);
     return `hsl(${hue}, 90%, 55%)`;
 }
 
-// --- NOVO: Función para actualizar o estilo visual dunha celda ---
 function actualizarEstiloCelda(cell, nota, volume) {
     if (volume > 0) {
         cell.style.fill = notaACor(nota);
-        // A opacidade mínima será 0.2 (para que sexa visible) e a máxima 1.0
         cell.style.opacity = 0.2 + volume * 0.8;
     } else {
-        // Restaura o estilo de celda inactiva
         cell.style.fill = '#3c3c3c';
         cell.style.opacity = '1';
     }
 }
 
-// --- MODIFICADO: inicializarSequencer agora usa volumes e engade eventos de roda ---
 function inicializarSequencer() {
-    // Agora o array almacena o volume de cada paso (0.0 a 1.0)
     sequencerData = Array(sequencerState.steps).fill(null).map(() => Array(sequencerState.notes).fill(0.0));
-    
     const gridRect = document.querySelector("#sequencer rect");
+    if (!gridRect || !sequencerGrid) return;
+
+    sequencerGrid.innerHTML = '';
+    
     const cellWidth = parseFloat(gridRect.getAttribute('width')) / sequencerState.steps;
     const cellHeight = (parseFloat(gridRect.getAttribute('height')) - 30) / sequencerState.notes;
     const startX = parseFloat(gridRect.getAttribute('x'));
@@ -498,40 +513,32 @@ function inicializarSequencer() {
         for (let noteIdx = 0; noteIdx < sequencerState.notes; noteIdx++) {
             const x = startX + step * cellWidth;
             const y = startY + noteIdx * cellHeight;
-            
             const cell = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             cell.setAttribute('class', 'sequencer-cell');
             cell.setAttribute('x', x);
             cell.setAttribute('y', y);
             cell.setAttribute('width', cellWidth);
             cell.setAttribute('height', cellHeight);
-            
             const note = sequencerState.notes - 1 - noteIdx;
             cell.dataset.step = step;
             cell.dataset.note = note;
-
-            // Evento de clic: Activa (vol=1) ou desactiva (vol=0) a nota
             cell.addEventListener('click', () => {
                 const currentVolume = sequencerData[step][note];
                 const newVolume = currentVolume > 0 ? 0.0 : 1.0;
                 sequencerData[step][note] = newVolume;
                 actualizarEstiloCelda(cell, note, newVolume);
             });
-
-            // Evento de roda do rato: Axusta o volume
             cell.addEventListener('wheel', (e) => {
                 e.preventDefault();
-                const direction = -Math.sign(e.deltaY); // Invertemos para que a roda cara arriba suba o volume
+                const direction = -Math.sign(e.deltaY);
                 let currentVolume = sequencerData[step][note];
-                let newVolume = currentVolume + direction * 0.1; // Axuste en pasos de 0.1
-                newVolume = Math.max(0.0, Math.min(1.0, newVolume)); // Limitamos entre 0.0 e 1.0
-                newVolume = Math.round(newVolume * 10) / 10; // Redondeamos para evitar problemas con decimais
-
+                let newVolume = currentVolume + direction * 0.1;
+                newVolume = Math.max(0.0, Math.min(1.0, newVolume));
+                newVolume = Math.round(newVolume * 10) / 10;
                 sequencerData[step][note] = newVolume;
                 actualizarEstiloCelda(cell, note, newVolume);
-                mostrarFeedbackRoda(); // Mostra feedback visual
+                mostrarFeedbackRoda();
             });
-
             sequencerGrid.appendChild(cell);
         }
     }
@@ -541,7 +548,7 @@ function startStopSequencer() {
     sequencerState.isPlaying = !sequencerState.isPlaying;
     if (sequencerState.isPlaying) {
         if (!audioContext) inicializarAudio();
-        sequencerState.currentStep = 0;
+        sequencerState.currentStep = (sequencerState.currentStep -1 + sequencerState.steps) % sequencerState.steps;
         playIcon.style.display = 'none';
         stopIcon.style.display = 'block';
         playhead.style.display = 'block';
@@ -556,131 +563,160 @@ function startStopSequencer() {
     }
 }
 
-// --- MODIFICADO: tick agora busca a nota activa e o seu volume ---
 function tick() {
     const step = sequencerState.currentStep;
-    
     let noteToPlay = null;
-    // Buscamos a nota máis aguda activa nese paso
-    for (let note = 0; note < sequencerState.notes; note++) {
+    for (let note = sequencerState.notes - 1; note >= 0; note--) {
         const volume = sequencerData[step][note];
         if (volume > 0) {
-            noteToPlay = { 
-                midiNote: 60 + note, // Asumimos C4 = 60
-                volume: volume 
-            };
+            noteToPlay = { midiNote: 60 + note, volume: volume };
+            break; 
         }
     }
-
-    if (noteToPlay) {
-        triggerSequencerNote(noteToPlay);
-    }
-
+    if (noteToPlay) triggerSequencerNote(noteToPlay);
+    
     const gridRect = document.querySelector("#sequencer rect");
     const cellWidth = parseFloat(gridRect.getAttribute('width')) / sequencerState.steps;
     const startX = parseFloat(gridRect.getAttribute('x'));
     const playheadYStart = parseFloat(gridRect.getAttribute('y')) + 30;
     const playheadYEnd = playheadYStart + parseFloat(gridRect.getAttribute('height')) - 30;
-    const playheadX = startX + (step * cellWidth);
+    const playheadX = startX + (step * cellWidth) + (cellWidth / 2);
     playhead.setAttribute('x1', playheadX);
     playhead.setAttribute('x2', playheadX);
     playhead.setAttribute('y1', playheadYStart);
     playhead.setAttribute('y2', playheadYEnd);
-
     sequencerState.currentStep = (step + 1) % sequencerState.steps;
 }
 
-// --- MODIFICADO: triggerSequencerNote agora acepta un obxecto con nota e volume ---
+// CORREXIDO: Lóxica da envolvente do secuenciador ADSR completa
 function triggerSequencerNote(noteData) {
     const now = audioContext.currentTime;
-    const noteDuration = (60 / sequencerState.tempo / 4) * 0.9;
-    
+    const gateDuration = (60 / sequencerState.tempo / 4) * 0.9; // Duración da "porta" do secuenciador
     const isNoiseActive = formasDeOndaVCO1[vco1State.ondaActual] === 'noise';
 
     if (!isNoiseActive) {
         const freq = midiToFreq(noteData.midiNote);
-        vco1.frequency.setValueAtTime(freq, now);
-        if(vco2TuningMode === 'relative') {
-            vco2.frequency.setValueAtTime(freq, now);
-        } else {
-            const detuneHz = vco2.frequency.value - vco1.frequency.value;
-            vco2.frequency.setValueAtTime(freq + detuneHz, now);
+        const microGlideTime = 0.005;
+        vco1.frequency.linearRampToValueAtTime(freq, now + microGlideTime);
+        if (ringModWet.gain.value < 0.01) {
+            if (vco2TuningMode === 'relative') {
+                vco2.frequency.linearRampToValueAtTime(freq, now + microGlideTime);
+            } else {
+                const detuneHz = vco2.frequency.value - vco1.frequency.value;
+                vco2.frequency.linearRampToValueAtTime(freq + detuneHz, now + microGlideTime);
+            }
         }
     }
-    
-    // Dispara a envolvente usando o volume da nota
+
+    // Cancelar eventos previos e comezar dende o valor actual para evitar clics
     vca.gain.cancelScheduledValues(now);
-    vca.gain.setValueAtTime(0, now);
-    // O ataque vai ata o volume específico da nota
-    vca.gain.linearRampToValueAtTime(noteData.volume, now + adsr.attack);
-    // O sustain tamén se escala segundo o volume da nota
-    vca.gain.linearRampToValueAtTime(adsr.sustain * noteData.volume, now + adsr.attack + adsr.decay);
-    vca.gain.setTargetAtTime(0, now + noteDuration - adsr.release, 0.01);
+    vca.gain.setValueAtTime(vca.gain.value, now);
+
+    // 1. Fase de Ataque
+    const attackEndTime = now + adsr.attack;
+    vca.gain.linearRampToValueAtTime(noteData.volume, attackEndTime);
+
+    // 2. Fase de Decaemento ao nivel de Sostemento (Sustain)
+    const sustainLevel = adsr.sustain * noteData.volume;
+    const decayEndTime = attackEndTime + adsr.decay;
+    vca.gain.linearRampToValueAtTime(sustainLevel, decayEndTime);
+
+    // 3. Fase de Relaxación (Release)
+    // A relaxación comeza cando a "porta" do secuenciador se pecha.
+    const gateOffTime = now + gateDuration;
+    // Usamos setTargetAtTime para un decaemento exponencial suave.
+    // O terceiro parámetro é unha constante de tempo; un valor máis baixo significa unha relaxación máis rápida.
+    const releaseTimeConstant = Math.max(0.001, adsr.release / 3); // Heurística común
+    vca.gain.setTargetAtTime(0, gateOffTime, releaseTimeConstant);
 }
 
+
 // --- 6. FUNCIÓNS DE ACTUALIZACIÓN ---
+function actualizarRingMod(x, y) {
+    if (!ringModGroup || !audioContext) return;
+
+    const clampedX = Math.max(-200, Math.min(200, x));
+    const clampedY = Math.max(-150, Math.min(150, y));
+    ringModGroup.transform.baseVal.getItem(0).setTranslate(clampedX, clampedY);
+    positionState.ringMod.x = clampedX;
+    positionState.ringMod.y = clampedY;
+    const absX = 600 + clampedX;
+    const absY = 180 + clampedY;
+    const wetAmount = mapearRango(absY, 30, 330, 1, 0);
+
+    if (ringModDry) ringModDry.gain.setTargetAtTime(1 - wetAmount, audioContext.currentTime, 0.02);
+    if (ringModWet) ringModWet.gain.setTargetAtTime(wetAmount, audioContext.currentTime, 0.02);
+
+    if (wetAmount > 0.01) {
+        const minFreq = 20;
+        const maxFreq = 2000;
+        const normalizedPosition = mapearRango(absX, 400, 800, 0, 1);
+        const freq = minFreq * Math.pow(maxFreq / minFreq, normalizedPosition);
+        if (vco2) {
+            vco2.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.02);
+            vco2.detune.setTargetAtTime(0, audioContext.currentTime, 0.01);
+        }
+    }
+}
+
 function actualizarValoresSintetizador() {
     actualizarVCO1(0, 0);
     actualizarVCO2(0, 0);
     actualizarLFO1(0, 0);
-    actualizarLFO2(0, 0);
     actualizarVCF(720, 80);
+    actualizarRingMod(0, 150);
     actualizarADSR(null);
     actualizarDelay(580, 530);
     actualizarTempo(235);
     actualizarLineasModulacion();
+    // CORREXIDO: Ocultar as liñas de modulación ao inicio
+    lfo1ModLine.style.display = 'none';
+    lfo2ModLine.style.display = 'none';
 }
 
 function actualizarVCO1(x, y) {
     const clampedX = Math.max(-360, Math.min(360, x));
     const clampedY = Math.max(-140, Math.min(140, y));
     vcoGroup.transform.baseVal.getItem(0).setTranslate(clampedX, clampedY);
-    
     positionState.vco.x = clampedX;
     positionState.vco.y = clampedY;
-
     const absoluteX = 400 + clampedX;
     const absoluteY = 180 + clampedY;
     const notaMIDI = mapearRango(absoluteY, 320, 40, 24, 96);
     const freq = midiToFreq(notaMIDI);
     const volume = mapearRango(absoluteX, 40, 760, 0, 0.7);
-
     if (vco1) vco1.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
     if (masterGain) masterGain.gain.setTargetAtTime(volume, audioContext.currentTime, 0.02);
-
-    if (vco2) {
-        if (vco2TuningMode === 'relative') {
-            vco2.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
-        } else {
+    if (vco2 && (!ringModWet || ringModWet.gain.value < 0.01)) {
+        if (vco2TuningMode === 'relative') vco2.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.01);
+        else {
             const currentDetuneHz = vco2.frequency.value - vco1.frequency.value;
             vco2.frequency.setTargetAtTime(freq + currentDetuneHz, audioContext.currentTime, 0.01);
         }
     }
-    
     const hue = mapearRango(absoluteY, 40, 320, 240, 0);
     const radius = mapearRango(absoluteX, 40, 760, 20, 60);
     vco1Circle.setAttribute('fill', `hsl(${hue}, 90%, 55%)`);
     vco1Circle.setAttribute('r', radius);
     vco2Circle.setAttribute('fill', `hsl(${hue}, 80%, 30%)`);
     actualizarLineasModulacion();
+    actualizarLFO1(positionState.lfo.x, positionState.lfo.y); // Actualizar LFOs cando a frecuencia base cambia
 }
 
 function actualizarVCO2(relativeX, relativeY) {
     const mix = mapearRango(relativeY, 70, -70, 0, 1, false);
     if (vco2Gain) vco2Gain.gain.setTargetAtTime(mix, audioContext.currentTime, 0.02);
     vco2Circle.setAttribute('fill-opacity', mix);
-
+    if (ringModWet && ringModWet.gain.value > 0.01) return;
     if (vco2TuningMode === 'relative') {
         const maxDetuneCents = 1200;
         const fifthDetuneCents = 700;
         const controlRangeX = 70;
-        const snapThreshold = 4; 
+        const snapThreshold = 4;
         const fifthXPosition = (fifthDetuneCents / maxDetuneCents) * controlRangeX;
-
         if (Math.abs(relativeX) < snapThreshold) relativeX = 0;
         else if (Math.abs(relativeX - fifthXPosition) < snapThreshold) relativeX = fifthXPosition;
         else if (Math.abs(relativeX + fifthXPosition) < snapThreshold) relativeX = -fifthXPosition;
-
         const detune = mapearRango(relativeX, -controlRangeX, controlRangeX, -maxDetuneCents, maxDetuneCents, false);
         if (vco2) {
             vco2.detune.setTargetAtTime(detune, audioContext.currentTime, 0.02);
@@ -693,42 +729,59 @@ function actualizarVCO2(relativeX, relativeY) {
         const detuneHz = mapearRango(relativeX, -70, 70, -maxDetuneHz, maxDetuneHz, false);
         if (vco1 && vco2) {
             vco2.frequency.setTargetAtTime(vco1.frequency.value + detuneHz, audioContext.currentTime, 0.02);
-            vco2.detune.setTargetAtTime(0, audioContext.currentTime, 0.01); 
+            vco2.detune.setTargetAtTime(0, audioContext.currentTime, 0.01);
         }
         actualizarGlows(false, false);
     }
 }
 
 function actualizarLFO1(x, y) {
+    if (!audioContext) return;
     const clampedX = Math.max(-100, Math.min(700, x));
     const clampedY = Math.max(-100, Math.min(250, y));
     lfoGroup.transform.baseVal.getItem(0).setTranslate(clampedX, clampedY);
-    
     positionState.lfo.x = clampedX;
     positionState.lfo.y = clampedY;
-
     const absX = 100 + clampedX;
     const absY = 100 + clampedY;
-    lfo1State.rate = mapearRango(absX, 0, 800, 0.1, 20);
+    const minRate = 0.1;
+    const maxRate = 20;
+    const normalizedPosition = mapearRango(absX, 0, 800, 0, 1); 
+    const exponentialRate = minRate * Math.pow(maxRate / minRate, normalizedPosition);
+    lfo1State.rate = exponentialRate;
     lfo1State.depth = mapearRango(absY, 350, 0, 0, 1);
-    
     if (lfo1Node) lfo1Node.frequency.setTargetAtTime(lfo1State.rate, audioContext.currentTime, 0.01);
-    if (lfo1Depth) lfo1Depth.gain.setTargetAtTime(lfo1State.depth * 2000, audioContext.currentTime, 0.01);
 
-    // A profundidade do LFO2 vincúlase á do LFO1 para que teña efecto
+    // LFO1
+    const lfo1TargetKey = lfo1State.targets[lfo1State.targetIndex];
+    let lfo1ModAmount = 0;
+    if (lfo1TargetKey === 'VCO1 Freq') {
+        lfo1ModAmount = (vco1.frequency.value * lfo1State.depth * 0.25); 
+    } else if (lfo1TargetKey === 'VCO2 Freq') {
+        lfo1ModAmount = (vco2.frequency.value * lfo1State.depth * 0.25);
+    } else if (lfo1TargetKey === 'VCF Freq') {
+        lfo1ModAmount = lfo1State.depth * 5000;
+    }
+    if (lfo1Depth) lfo1Depth.gain.setTargetAtTime(lfo1ModAmount, audioContext.currentTime, 0.01);
+
+    // LFO2
     lfo2State.depth = lfo1State.depth;
-    if (lfo2Depth) lfo2Depth.gain.setTargetAtTime(lfo2State.depth * 25, audioContext.currentTime, 0.01);
-
+    const lfo2TargetKey = lfo2State.targets[lfo2State.targetIndex];
+    let lfo2ModAmount = 0;
+    if (lfo2TargetKey === 'VCO1 Freq') {
+        lfo2ModAmount = (vco1.frequency.value * lfo2State.depth * 0.25);
+    } else if (lfo2TargetKey === 'VCO2 Detune') {
+        lfo2ModAmount = lfo2State.depth * 200;
+    } else if (lfo2TargetKey === 'VCF Q') {
+        lfo2ModAmount = lfo2State.depth * 25;
+    }
+    if (lfo2Depth) lfo2Depth.gain.setTargetAtTime(lfo2ModAmount, audioContext.currentTime, 0.01);
+    
     actualizarLineasModulacion();
 }
 
 function actualizarLFO2(relativeX, relativeY) {
-    lfo2State.rate = mapearRango(relativeX, -45, 45, 0.1, 20);
-    lfo2State.depth = mapearRango(relativeY, 45, -45, 0, 1);
-
-    if (lfo2Node) lfo2Node.frequency.setTargetAtTime(lfo2State.rate, audioContext.currentTime, 0.01);
-    if (lfo2Depth) lfo2Depth.gain.setTargetAtTime(lfo2State.depth * 25, audioContext.currentTime, 0.01);
-    actualizarLineasModulacion();
+    // Esta función está vacía intencionadamente, o control do LFO2 faise coa roda do rato
 }
 
 function actualizarLineasModulacion() {
@@ -736,18 +789,14 @@ function actualizarLineasModulacion() {
         const line = (numLFO === 1) ? lfo1ModLine : lfo2ModLine;
         const state = (numLFO === 1) ? lfo1State : lfo2State;
         const targetKey = state.targets[state.targetIndex];
-
         if (targetKey === 'OFF') {
             line.style.display = 'none';
             return;
         }
-
         const lfoMatrix = lfoGroup.transform.baseVal.getItem(0).matrix;
         line.setAttribute('x1', lfoMatrix.e + 100);
         line.setAttribute('y1', lfoMatrix.f + 100);
-
         let targetX, targetY, targetColor;
-
         if (targetKey.includes('VCO1')) {
             const vcoMatrix = vcoGroup.transform.baseVal.getItem(0).matrix;
             targetX = vcoMatrix.e + 400;
@@ -756,7 +805,7 @@ function actualizarLineasModulacion() {
         } else if (targetKey.includes('VCO2')) {
             const vcoMatrix = vcoGroup.transform.baseVal.getItem(0).matrix;
             targetX = vcoMatrix.e + 400;
-            targetY = vcoMatrix.f + 125; // Apunta á forma de onda do VCO2
+            targetY = vcoMatrix.f + 125;
             targetColor = vco2Circle.getAttribute('fill');
         } else if (targetKey.includes('VCF')) {
             targetX = parseFloat(vcfJack.getAttribute('cx'));
@@ -766,7 +815,6 @@ function actualizarLineasModulacion() {
             line.style.display = 'none';
             return;
         }
-
         line.setAttribute('x2', targetX);
         line.setAttribute('y2', targetY);
         line.setAttribute('stroke', targetColor);
@@ -777,26 +825,16 @@ function actualizarLineasModulacion() {
 function actualizarVCF(x, y) {
     const vcfW = parseFloat(vcfControl.getAttribute('width'));
     const clampedX = Math.max(0, Math.min(800 - vcfW, x));
-
-    // Límites verticais definitivos para o TOPO do rectángulo
-    const yMin = 1;   // Marxe de 1px para previr o bug do borde
-    const yMax = 380; // Base aliñada co ADSR
-    
+    const yMin = 1;
+    const yMax = 380;
     const maxHeight = yMax - yMin;
-
-    // Asegura que a posición Y do rato se manteña dentro dos límites
     const clampedY = Math.max(yMin, Math.min(yMax, y));
-    
-    // A altura calcúlase sempre dende a base (yMax)
     const newHeight = Math.max(1, yMax - clampedY);
-
     vcfControl.setAttribute('x', clampedX);
     vcfControl.setAttribute('y', clampedY);
     vcfControl.setAttribute('height', newHeight);
-    
     vcfJack.setAttribute('cx', clampedX + (vcfW / 2));
     vcfJack.setAttribute('cy', clampedY);
-
     const freq = Math.exp(mapearRango(clampedX, 0, 800 - vcfW, Math.log(20), Math.log(20000)));
     const q = mapearRango(newHeight, 1, maxHeight, 0.1, 25);
     if (vcf) {
@@ -809,31 +847,23 @@ function actualizarVCF(x, y) {
 function actualizarADSR(handleId, x, y) {
     const { attack, decaySustain, release } = adsrGroupElements;
     const yMin = 280, yMax = 380;
-    
     if (handleId) {
-        if (handleId === 'attack-handle') {
-            attack.setAttribute('cx', Math.max(50, x));
-        } else if (handleId === 'decay-sustain-handle') {
+        if (handleId === 'attack-handle') attack.setAttribute('cx', Math.max(50, x));
+        else if (handleId === 'decay-sustain-handle') {
             decaySustain.setAttribute('cx', Math.max(parseFloat(attack.getAttribute('cx')) + 10, x));
             decaySustain.setAttribute('cy', Math.max(yMin, Math.min(yMax, y)));
-        } else if (handleId === 'release-handle') {
-            release.setAttribute('cx', Math.max(parseFloat(decaySustain.getAttribute('cx')) + 10, x));
-        }
+        } else if (handleId === 'release-handle') release.setAttribute('cx', Math.max(parseFloat(decaySustain.getAttribute('cx')) + 10, x));
     }
-    
     const startX = 50;
     const attackX = parseFloat(attack.getAttribute('cx'));
     const decaySustainX = parseFloat(decaySustain.getAttribute('cx'));
     const decaySustainY = parseFloat(decaySustain.getAttribute('cy'));
     const releaseX = parseFloat(release.getAttribute('cx'));
-    
     adsr.attack = mapearRango(attackX - startX, 1, 150, 0.01, 2.0);
     adsr.decay = mapearRango(decaySustainX - attackX, 10, 150, 0.01, 2.0);
     adsr.sustain = mapearRango(decaySustainY, yMax, yMin, 0.0, 1.0);
     adsr.release = mapearRango(releaseX - decaySustainX, 10, 150, 0.01, 5.0);
-    
-    const p1 = `${startX},${yMax}`, p2 = `${attackX},${yMin}`;
-    const p3 = `${decaySustainX},${decaySustainY}`, p4 = `${releaseX},${yMax}`;
+    const p1 = `${startX},${yMax}`, p2 = `${attackX},${yMin}`, p3 = `${decaySustainX},${decaySustainY}`, p4 = `${releaseX},${yMax}`;
     adsrShape.setAttribute('points', `${p1} ${p2} ${p3} ${p4}`);
 }
 
@@ -844,11 +874,9 @@ function actualizarDelay(x, y) {
     const clampedY = Math.max(yMin, Math.min(yMax, y));
     delayHandle.setAttribute('cx', clampedX);
     delayHandle.setAttribute('cy', clampedY);
-
     const delayTime = mapearRango(clampedX, xMin, xMax, 0.01, 2.0);
     const feedbackAmount = mapearRango(clampedY, yMax, yMin, 0, 0.9);
     const wetAmount = mapearRango(clampedY, yMax, yMin, 0, 0.7);
-
     if(delayNode) delayNode.delayTime.setTargetAtTime(delayTime, audioContext.currentTime, 0.01);
     if(feedbackNode) feedbackNode.gain.setTargetAtTime(feedbackAmount, audioContext.currentTime, 0.01);
     if(wetGain) wetGain.gain.setTargetAtTime(wetAmount, audioContext.currentTime, 0.01);
@@ -858,11 +886,9 @@ function actualizarTempo(x) {
     const xMin = 150, xMax = 280;
     const clampedX = Math.max(xMin, Math.min(xMax, x));
     tempoHandle.setAttribute('cx', clampedX);
-
     const newTempo = Math.round(mapearRango(clampedX, xMin, xMax, 60, 240));
     sequencerState.tempo = newTempo;
     tempoDisplay.textContent = `${newTempo} bpm`;
-
     if (sequencerState.isPlaying) {
         clearInterval(sequencerState.clockInterval);
         const intervalTime = 60000 / sequencerState.tempo / 4;
@@ -871,7 +897,6 @@ function actualizarTempo(x) {
 }
 
 // --- 7. GARDAR/CARGAR E ESTADO DE AUDIO ---
-
 function resetAudioEngine() {
     if (!audioContext) return;
     const now = audioContext.currentTime;
@@ -889,6 +914,7 @@ async function gardarConfiguracion() {
         positions: {
             vcoGroup: positionState.vco,
             lfoGroup: positionState.lfo,
+            ringMod: positionState.ringMod,
             vcf: { x: vcfControl.getAttribute('x'), y: vcfControl.getAttribute('y') },
             adsr: {
                 attack: { cx: adsrGroupElements.attack.getAttribute('cx') },
@@ -909,32 +935,23 @@ async function gardarConfiguracion() {
         }
     };
     const result = await window.electronAPI.saveSettings(settings);
-    if (result.success) {
-        console.log(`Configuración gardada en: ${result.path}`);
-    } else if (!result.cancelled) {
-        console.error(`Error gardando a configuración: ${result.error}`);
-    }
+    if (result.success) console.log(`Configuración gardada en: ${result.path}`);
+    else if (!result.cancelled) console.error(`Error gardando a configuración: ${result.error}`);
 }
 
 async function cargarConfiguracion() {
     const result = await window.electronAPI.loadSettings();
-    if (result.success) {
-        aplicarConfiguracion(result.data);
-    } else if (!result.cancelled) {
-        console.error(`Error cargando a configuración: ${result.error}`);
-    }
+    if (result.success) aplicarConfiguracion(result.data);
+    else if (!result.cancelled) console.error(`Error cargando a configuración: ${result.error}`);
 }
 
-// --- MODIFICADO: aplicarConfiguracion agora restaura o estilo de cada celda ---
 function aplicarConfiguracion(settings) {
     try {
         if (!settings || !settings.positions || !settings.states) {
             console.error("O ficheiro de configuración é inválido ou está incompleto.");
             return;
         }
-        
         resetAudioEngine();
-
         vco1State = settings.states.vco1;
         vco2State = settings.states.vco2;
         vco2TuningMode = settings.states.vco2TuningMode || 'relative';
@@ -942,47 +959,35 @@ function aplicarConfiguracion(settings) {
         lfo2State = settings.states.lfo2;
         sequencerState = settings.states.sequencer;
         sequencerData = settings.states.sequencerData;
-
         const { positions } = settings;
-
         actualizarVCO1(positions.vcoGroup.x, positions.vcoGroup.y);
         actualizarLFO1(positions.lfoGroup.x, positions.lfoGroup.y);
-        
+        if (positions.ringMod) actualizarRingMod(positions.ringMod.x, positions.ringMod.y);
         vcfControl.setAttribute('x', positions.vcf.x);
         vcfControl.setAttribute('y', positions.vcf.y);
         actualizarVCF(parseFloat(positions.vcf.x), parseFloat(positions.vcf.y));
-
         adsrGroupElements.attack.setAttribute('cx', positions.adsr.attack.cx);
         adsrGroupElements.decaySustain.setAttribute('cx', positions.adsr.decaySustain.cx);
         adsrGroupElements.decaySustain.setAttribute('cy', positions.adsr.decaySustain.cy);
         adsrGroupElements.release.setAttribute('cx', positions.adsr.release.cx);
         actualizarADSR(null);
-
         delayHandle.setAttribute('cx', positions.delay.cx);
         delayHandle.setAttribute('cy', positions.delay.cy);
         actualizarDelay(parseFloat(positions.delay.cx), parseFloat(positions.delay.cy));
-
         tempoHandle.setAttribute('cx', positions.tempo.cx);
         actualizarTempo(parseFloat(positions.tempo.cx));
-        
         cambiarFormaDeOnda(1, true);
         cambiarFormaDeOnda(2, true);
         cambiarDestinoLFO(1, true);
         cambiarDestinoLFO(2, true);
-
-        // Actualiza o visual de cada celda do secuenciador segundo os datos cargados
         const cells = document.querySelectorAll('.sequencer-cell');
         cells.forEach(cell => {
             const step = parseInt(cell.dataset.step, 10);
             const note = parseInt(cell.dataset.note, 10);
-            const volume = (sequencerData && sequencerData[step] && sequencerData[step][note] !== undefined)
-                           ? sequencerData[step][note]
-                           : 0;
+            const volume = (sequencerData && sequencerData[step] && sequencerData[step][note] !== undefined) ? sequencerData[step][note] : 0;
             actualizarEstiloCelda(cell, note, volume);
         });
-        
         console.log("Configuración aplicada con éxito.");
-
     } catch (error) {
         console.error("🛑 ERROR CRÍTICO ao aplicar a configuración:", error);
     }
@@ -995,7 +1000,6 @@ function actualizarGlows(unison, fifth) {
     vco1Circle.removeAttribute('stroke-width');
     vco2Circle.removeAttribute('stroke');
     vco2Circle.removeAttribute('stroke-width');
-
     if (unison) {
         vco1Circle.setAttribute('stroke', 'white');
         vco1Circle.setAttribute('stroke-width', '2');
@@ -1058,6 +1062,8 @@ function createWhiteNoiseBuffer(audioContext) {
 document.addEventListener('DOMContentLoaded', () => {
     inicializarSequencer();
     actualizarValoresSintetizador();
+    
+    playButton.addEventListener('click', startStopSequencer);
     saveButton.addEventListener('click', gardarConfiguracion);
     loadButton.addEventListener('click', cargarConfiguracion);
 });
