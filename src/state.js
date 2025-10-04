@@ -69,6 +69,7 @@ const state = {
             tempo: { cx: 215 }
         },
         domCache: {}, // Caché para os elementos do DOM
+        isDrawing: false, // Novo flag para o debuxo no secuenciador
     },
 
     // Estado do Secuenciador

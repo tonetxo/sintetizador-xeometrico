@@ -20,7 +20,7 @@ import {
     DELAY_MAX_WET
 } from './constants.js';
 import { initializeAudio, triggerAttack, triggerRelease, resetAudioEngine } from './audio.js';
-import { startStopSequencer, reloadSequencerUI } from './sequencer.js';
+import { startStopSequencer, reloadSequencerUI, initializeSequencer } from './sequencer.js';
 import { mapearRango, midiToFreq, getSvgCoordinates } from './utils.js';
 import { gardarConfiguracion, cargarConfiguracion } from './file-io.js';
 
@@ -151,14 +151,19 @@ function applyLFOModulation(lfoNum) {
     if (depthNode) depthNode.gain.setTargetAtTime(modAmount, state.audio.audioContext.currentTime, AUDIO_RAMP_TIME);
 }
 
-
 // --- Xestores de Eventos ---
 
 function handleMouseDown(e) {
     if (e.button !== 0) return;
+    
+    // 🔥 NUEVO: Ignorar clicks en celdas del secuenciador
+    if (e.target.classList.contains('sequencer-cell')) {
+        return;
+    }
+    
     if (!state.audio.isInitialized) {
         initializeAudio();
-        syncAudioParamsFromState(); // Sincronización inicial xusto despois de crear o contexto
+        syncAudioParamsFromState();
     }
 
     const target = e.target.closest('[data-draggable]');
@@ -202,6 +207,8 @@ function handleMouseUp() {
         if (!state.audio.sustainActivado) triggerRelease();
     }
     state.ui.dragContext = {};
+    state.ui.isDrawing = false; // 🔥 Resetear el flag de dibujo
+    reloadSequencerUI(); // FIX: Reload sequencer UI after drag-drawing is finished
 }
 
 function handleContextMenu(e) {
@@ -720,6 +727,7 @@ function getInitialPositionForDrag(type, target) {
 export function initializeAll() {
     cacheDomElements();
     registerEventListeners();
+    initializeSequencer(); // Call initializeSequencer BEFORE aplicarConfiguracion
     aplicarConfiguracion({ positions: state.ui.positions, states: { ...state.synth, sequencer: state.sequencer, sequencerData: state.sequencer.data } });
     animarLFOs();
 }

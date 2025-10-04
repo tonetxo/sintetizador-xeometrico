@@ -40,12 +40,17 @@ export function initializeSequencer() {
             cell.dataset.note = note;
 
             // Evento de clic para activar/desactivar nota
-            cell.addEventListener('click', () => {
+            cell.addEventListener('click', (e) => {
+                e.preventDefault();
                 const currentVolume = state.sequencer.data[step][note];
                 const newVolume = currentVolume > 0 ? 0.0 : 1.0;
                 state.sequencer.data[step][note] = newVolume;
                 actualizarEstiloCelda(cell, note, newVolume);
             });
+
+            // Eventos para dibujo por arrastre
+            cell.addEventListener('mousedown', handleSequencerCellMouseDown);
+            cell.addEventListener('mouseover', handleSequencerCellMouseOver);
 
             // Evento de roda para axustar o volume
             cell.addEventListener('wheel', (e) => {
@@ -157,4 +162,36 @@ export function reloadSequencerUI() {
             : 0;
         actualizarEstiloCelda(cell, note, volume);
     });
+}
+
+// Funciones para el dibujo por arrastre
+function handleSequencerCellMouseDown(e) {
+    e.preventDefault();
+    const cell = e.target;
+    // Asegurarse de que es una celda del secuenciador
+    if (!cell.classList.contains('sequencer-cell')) return;
+    
+    const step = parseInt(cell.dataset.step, 10);
+    const note = parseInt(cell.dataset.note, 10);
+
+    state.ui.isDrawing = true;
+    const currentVolume = state.sequencer.data[step][note];
+    const newVolume = currentVolume > 0 ? 0.0 : 1.0;
+    state.sequencer.data[step][note] = newVolume;
+    actualizarEstiloCelda(cell, note, newVolume);
+}
+
+function handleSequencerCellMouseOver(e) {
+    if (state.ui.isDrawing) {
+        const cell = e.target;
+        // Asegurarse de que es una celda del secuenciador
+        if (!cell.classList.contains('sequencer-cell')) return;
+        
+        const step = parseInt(cell.dataset.step, 10);
+        const note = parseInt(cell.dataset.note, 10);
+        const currentVolume = state.sequencer.data[step][note];
+        const newVolume = currentVolume > 0 ? 0.0 : 1.0;
+        state.sequencer.data[step][note] = newVolume;
+        actualizarEstiloCelda(cell, note, newVolume);
+    }
 }
