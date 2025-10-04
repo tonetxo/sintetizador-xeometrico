@@ -1,0 +1,1653 @@
+VM5:5 ✅ Preload script cargado correctamente.
+ui.js:689 🛑 ERROR CRÍTICO ao aplicar a configuración: TypeError: Cannot read properties of undefined (reading 'x')
+    at aplicarConfiguracion (ui.js:664:38)
+    at initializeAll (ui.js:840:5)
+    at HTMLDocument.main (renderer.js:12:5)
+aplicarConfiguracion @ ui.js:689
+renderer.js:20 Sintetizador Xeométrico listo.
+VM4 sandbox_bundle:2 Electron Security Warning (Insecure Content-Security-Policy) This renderer process has either no Content Security
+  Policy set or a policy with "unsafe-eval" enabled. This exposes users of
+  this app to unnecessary security risks.
+
+For more information and help, consult
+https://electronjs.org/docs/tutorial/security.
+This warning will not show up
+once the app is packaged.
+warnAboutInsecureCSP @ VM4 sandbox_bundle:2
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:510 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:510:57)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:512 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:512:30)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:553 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateDelay (ui.js:553:40)
+    at updateControl (ui.js:257:13)
+    at ui.js:106:9
+ui.js:819 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at restaurarEstiloVCO (ui.js:819:16)
+    at SVGSVGElement.handleMouseDown (ui.js:85:9)
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:819 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at restaurarEstiloVCO (ui.js:819:16)
+    at SVGSVGElement.handleMouseDown (ui.js:85:9)
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:819 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at restaurarEstiloVCO (ui.js:819:16)
+    at SVGSVGElement.handleMouseDown (ui.js:85:9)
+ui.js:819 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at restaurarEstiloVCO (ui.js:819:16)
+    at SVGSVGElement.handleMouseDown (ui.js:85:9)
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:819 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at restaurarEstiloVCO (ui.js:819:16)
+    at SVGSVGElement.handleMouseDown (ui.js:85:9)
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:819 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at restaurarEstiloVCO (ui.js:819:16)
+    at SVGSVGElement.handleMouseDown (ui.js:85:9)
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:819 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at restaurarEstiloVCO (ui.js:819:16)
+    at SVGSVGElement.handleMouseDown (ui.js:85:9)
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:593 Uncaught TypeError: Cannot read properties of undefined (reading 'removeAttribute')
+    at actualizarGlows (ui.js:593:16)
+    at updateVCO (ui.js:399:5)
+    at updateControl (ui.js:241:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:498 Uncaught TypeError: Failed to execute 'setTargetAtTime' on 'AudioParam': The provided float value is non-finite.
+    at updateVCF (ui.js:498:41)
+    at updateControl (ui.js:251:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9
+ui.js:514 Uncaught TypeError: Cannot read properties of undefined (reading 'setAttribute')
+    at updateADSR (ui.js:514:66)
+    at updateControl (ui.js:254:13)
+    at ui.js:106:9

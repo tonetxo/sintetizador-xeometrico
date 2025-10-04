@@ -73,7 +73,6 @@ export function initializeAudio() {
     //    converxen todas na entrada do Filtro Controlado por Tensión (VCF).
     nodes.ringModDry.connect(nodes.vcf);
     nodes.ringModWet.connect(nodes.vcf);
-    nodes.noiseGenerator.connect(nodes.vcf);
 
     // 4. A saída do filtro (VCF) pasa a través do Amplificador Controlado por Tensión (VCA),
     //    que controla o volume final da nota (a nosa envolvente ADSR actúa aquí).
@@ -196,39 +195,49 @@ export function triggerRelease() {
  */
 export function triggerSequencerNote(noteData) {
     const { audioContext, nodes } = state.audio;
-    const { adsr, vco1, vco2, sequencer } = state.synth;
+    const { adsr, vco1, vco2 } = state.synth;
+    const { sequencer } = state;
     const now = audioContext.currentTime;
 
     // Duración da "porta" do secuenciador
-    const gateDuration = (60 / sequencer.tempo / 4) * 0.9;
+    const tempoSeguro = (sequencer && sequencer.tempo > 0) ? sequencer.tempo : 120;
+    const gateDuration = (60 / tempoSeguro / 4) * 0.9;
 
     // Aplicar frecuencia (se non é ruído)
     if (VCO1_WAVEFORMS[vco1.ondaActual] !== 'noise') {
         const freq = 440 * Math.pow(2, (noteData.midiNote - 69) / 12);
-        nodes.vco1.frequency.linearRampToValueAtTime(freq, now + AUDIO_RAMP_TIME);
-        if (nodes.ringModWet.gain.value < 0.01) { // Só se o ring mod non está activo
-            if (vco2.tuningMode === 'relative') {
-                nodes.vco2.frequency.linearRampToValueAtTime(freq, now + AUDIO_RAMP_TIME);
-            } else {
-                const detuneHz = nodes.vco2.frequency.value - nodes.vco1.frequency.value;
-                nodes.vco2.frequency.linearRampToValueAtTime(freq + detuneHz, now + AUDIO_RAMP_TIME);
+        if (isFinite(freq)) { // Engadir unha última comprobación por seguridade
+            nodes.vco1.frequency.linearRampToValueAtTime(freq, now + AUDIO_RAMP_TIME);
+            if (nodes.ringModWet.gain.value < 0.01) { // Só se o ring mod non está activo
+                if (vco2.tuningMode === 'relative') {
+                    nodes.vco2.frequency.linearRampToValueAtTime(freq, now + AUDIO_RAMP_TIME);
+                } else {
+                    const detuneHz = nodes.vco2.frequency.value - nodes.vco1.frequency.value;
+                    nodes.vco2.frequency.linearRampToValueAtTime(freq + detuneHz, now + AUDIO_RAMP_TIME);
+                }
             }
         }
     }
 
     // Envolvente ADSR específica para o secuenciador
+    // Usamos isFinite para validar, xa que typeof NaN é 'number'.
+    const attack = (adsr && isFinite(adsr.attack)) ? adsr.attack : 0.01;
+    const decay = (adsr && isFinite(adsr.decay)) ? adsr.decay : 0.1;
+    const sustain = (adsr && isFinite(adsr.sustain)) ? adsr.sustain : 0.5;
+    const release = (adsr && isFinite(adsr.release)) ? adsr.release : 0.3;
+
     nodes.vca.gain.cancelScheduledValues(now);
     nodes.vca.gain.setValueAtTime(nodes.vca.gain.value, now);
 
-    const attackEndTime = now + adsr.attack;
+    const attackEndTime = now + attack;
     nodes.vca.gain.linearRampToValueAtTime(noteData.volume, attackEndTime);
 
-    const sustainLevel = adsr.sustain * noteData.volume;
-    const decayEndTime = attackEndTime + adsr.decay;
+    const sustainLevel = sustain * noteData.volume;
+    const decayEndTime = attackEndTime + decay;
     nodes.vca.gain.linearRampToValueAtTime(sustainLevel, decayEndTime);
 
     const gateOffTime = now + gateDuration;
-    const releaseTimeConstant = Math.max(0.001, adsr.release / 3);
+    const releaseTimeConstant = Math.max(0.001, release / 3);
     nodes.vca.gain.setTargetAtTime(0, gateOffTime, releaseTimeConstant);
 }
 

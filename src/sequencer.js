@@ -9,7 +9,8 @@ import { notaACor, actualizarEstiloCelda, mostrarFeedbackRoda } from './ui.js';
  */
 export function initializeSequencer() {
     initializeSequencerData();
-    const sequencerGrid = state.ui.domCache[DOM_IDS.sequencerGrid];
+    const { domCache } = state.ui;
+    const sequencerGrid = domCache.sequencerGrid;
     if (!sequencerGrid) return;
 
     sequencerGrid.innerHTML = ''; // Limpar a reixa anterior
@@ -70,6 +71,7 @@ export function initializeSequencer() {
  */
 export function startStopSequencer() {
     state.sequencer.isPlaying = !state.sequencer.isPlaying;
+    const { domCache } = state.ui;
 
     if (state.sequencer.isPlaying) {
         if (!state.audio.isInitialized) {
@@ -78,16 +80,18 @@ export function startStopSequencer() {
         // Asegurarse de que o paso actual sexa válido
         state.sequencer.currentStep = (state.sequencer.currentStep - 1 + state.sequencer.steps) % state.sequencer.steps;
 
-        state.ui.domCache[DOM_IDS.playIcon].style.display = 'none';
-        state.ui.domCache[DOM_IDS.stopIcon].style.display = 'block';
-        state.ui.domCache[DOM_IDS.playhead].style.display = 'block';
+        domCache.playIcon.style.display = 'none';
+        domCache.stopIcon.style.display = 'block';
+        domCache.playhead.style.display = 'block';
 
-        const intervalTime = 60000 / state.sequencer.tempo / 4; // 16th notes
+        // Asegurarse de que o tempo sexa un número positivo para evitar un intervalo infinito.
+        const tempoSeguro = Math.max(1, state.sequencer.tempo || 120);
+        const intervalTime = 60000 / tempoSeguro / 4; // 16th notes
         state.sequencer.clockInterval = setInterval(tick, intervalTime);
     } else {
-        state.ui.domCache[DOM_IDS.playIcon].style.display = 'block';
-        state.ui.domCache[DOM_IDS.stopIcon].style.display = 'none';
-        state.ui.domCache[DOM_IDS.playhead].style.display = 'none';
+        domCache.playIcon.style.display = 'block';
+        domCache.stopIcon.style.display = 'none';
+        domCache.playhead.style.display = 'none';
 
         clearInterval(state.sequencer.clockInterval);
         state.sequencer.clockInterval = null;
@@ -123,7 +127,7 @@ function tick() {
  * @param {number} step - O paso actual do secuenciador.
  */
 function updatePlayhead(step) {
-    const playhead = state.ui.domCache[DOM_IDS.playhead];
+    const playhead = state.ui.domCache.playhead;
     const gridRect = document.querySelector("#sequencer-bg");
     if (!gridRect || !playhead) return;
 

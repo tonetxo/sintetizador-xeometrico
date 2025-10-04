@@ -34,6 +34,7 @@ export const SEQUENCER_DEFAULTS = {
     steps: 16,
     notes: 12,
     tempo: 120,
+    startNote: 48, // C3 - Nota inicial para o secuenciador
 };
 
 // --- Constantes da Interface Gráfica (GUI) ---
@@ -45,7 +46,7 @@ export const DRAG_LIMITS = {
     ringMod: { xMin: -200, xMax: 200, yMin: -150, yMax: 150 },
     vcf: { yMin: 1, yMax: 380 },
     adsr: { yMin: 280, yMax: 380 },
-    delay: { xMin: 500, xMax: 660, yMin: 300, yMax: 380 },
+    delay: { xMin: 500, xMax: 660, yMin: 310, yMax: 380 },
     tempo: { xMin: 150, xMax: 280 }
 };
 
@@ -86,6 +87,8 @@ export const DOM_IDS = {
     adsrRelease: 'release-handle',
     adsrShape: 'adsr-shape',
     lfoGroup: 'lfo-group',
+    lfo1Circle: 'lfo1-circle',
+    lfo2Circle: 'lfo2-circle',
     lfo1Indicator: 'lfo1-indicator',
     lfo2Indicator: 'lfo2-indicator',
     lfo1ModLine: 'lfo1-mod-line',
