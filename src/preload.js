@@ -8,4 +8,6 @@ console.log('✅ Preload script cargado correctamente.');
 contextBridge.exposeInMainWorld('electronAPI', {
   saveSettings: (settings) => ipcRenderer.invoke('save-dialog', settings),
   loadSettings: () => ipcRenderer.invoke('load-dialog'),
+  onMenuSave: (callback) => ipcRenderer.on('menu-save', callback),
+  onMenuLoad: (callback) => ipcRenderer.on('menu-load', callback),
 });
